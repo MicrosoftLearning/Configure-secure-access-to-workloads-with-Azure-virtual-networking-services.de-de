@@ -6,13 +6,11 @@ lab:
 
 # Lab: Weiterleiten von Datenverkehr an die Firewall
 
-
 ## Szenario
 
-Nachdem nun eine Firewall mit Richtlinien eingerichtet wurde, die die Sicherheitsanforderungen Ihrer Organisation erzwingen, müssen Sie Ihren Netzwerkdatenverkehr an das Firewallsubnetz weiterleiten, damit es den Datenverkehr filtern und überprüfen kann. Routingtabellen ermöglichen die Steuerung des Routings von Netzwerkdatenverkehr zu und von der Webanwendung. Die Firewallregeln werden auf den Netzwerkdatenverkehr angewendet, wenn Sie Ihren Netzwerkdatenverkehr als Subnetz-Standardgateway an die Firewall weiterleiten. 
+Nachdem nun eine Firewall mit Richtlinien eingerichtet wurde, die die Sicherheitsanforderungen Ihrer Organisation erzwingen, müssen Sie Ihren Netzwerkdatenverkehr an das Firewallsubnetz weiterleiten, damit es den Datenverkehr filtern und überprüfen kann. Routingtabellen ermöglichen die Steuerung des Routings von Netzwerkdatenverkehr zu und von der Webanwendung. Die Firewallregeln werden auf den Netzwerkdatenverkehr angewendet, wenn Sie Ihren Netzwerkdatenverkehr als Subnetz-Standardgateway an die Firewall weiterleiten.
 
 ### Architekturdiagramm
-
 
 ![Diagramm, das ein virtuelles Netzwerk mit einer Firewall und einer Routingtabelle zeigt](../Media/task-3.png)
 
@@ -21,7 +19,6 @@ Nachdem nun eine Firewall mit Richtlinien eingerichtet wurde, die die Sicherheit
 - Erstellen und Konfigurieren einer Routingtabelle.
 - Verknüpfen Sie eine Routingtabelle mit einem Subnetz.
   
-
 ## Übungsanweisungen
 
 ### Erstellen einer Routingtabelle
@@ -38,8 +35,7 @@ Nachdem nun eine Firewall mit Richtlinien eingerichtet wurde, die die Sicherheit
 
     1. Wählen Sie im Bereich „Übersicht“ **fwpip** aus.
 
-    1. Notieren Sie die **öffentliche IP-Adresse**. 
-
+    1. Notieren Sie die **öffentliche IP-Adresse**.
 
 1. Geben Sie **Routingtabellen** in das Suchfeld ein. Wählen Sie „Routingtabelle“ aus, wenn diese Option in den Suchergebnissen angezeigt wird.
 
@@ -47,14 +43,12 @@ Nachdem nun eine Firewall mit Richtlinien eingerichtet wurde, die die Sicherheit
 
 1. Geben Sie auf der Registerkarte **Grundeinstellungen** von „Routingtabelle erstellen“ die Informationen aus der folgenden Tabelle ein.
 
-    | Eigenschaft | Wert    |
-    |:---------|:---------|
-    |Abonnement|**Wählen Sie Ihr Abonnement aus**|
-    |Ressourcengruppe|**RG1**|
-    |Region|**USA, Osten**|
-    |Name|**app-vnet-firewall-rt**|
-
-    
+    | Eigenschaft       | Wert                        |
+    | :------------- | :--------------------------- |
+    | Abonnement   | **Wählen Sie Ihr Abonnement aus** |
+    | Ressourcengruppe | **RG1**                      |
+    | Region         | **USA, Osten**                  |
+    | Name           | **app-vnet-firewall-rt**     |
 
 1. Wählen Sie **Überprüfen + erstellen** und anschließend **Erstellen** aus.
 
@@ -72,10 +66,10 @@ Nachdem nun eine Firewall mit Richtlinien eingerichtet wurde, die die Sicherheit
 
 1. Geben Sie auf der Seite **Subnetz zuordnen** die Informationen aus der folgenden Tabelle ein:
 
-    | Eigenschaft | Wert    |
-    |:---------|:---------|
-    |Virtuelles Netzwerk|**app-vnet** (RG1)|
-    |Subnetz|**frontend**|
+    | Eigenschaft        | Wert              |
+    | :-------------- | :----------------- |
+    | Virtuelles Netzwerk | **app-vnet** (RG1) |
+    | Subnetz          | **frontend**       |
 
 1. Wählen Sie **OK** aus.
 
@@ -93,19 +87,16 @@ Nachdem nun eine Firewall mit Richtlinien eingerichtet wurde, die die Sicherheit
 
 1. Geben Sie auf der Seite **Route hinzufügen** die Informationen aus der folgenden Tabelle ein:
 
-    | Eigenschaft | Wert    |
-    |:---------|:---------|
-    |Routenname|**outbound-firewall**|
-    |Zieltyp|**IP-Adressen**|
-    |Ziel-IP-Adressen/CIDR-Bereich|**0.0.0.0/0**|
-    |Typ des nächsten Hops|**Virtuelles Gerät**|
-    |Adresse des nächsten Hops|**private IP-Adresse der zuvor erfassten Firewall**|
-
+    | Eigenschaft                            | Wert                                                   |
+    | :---------------------------------- | :------------------------------------------------------ |
+    | Routenname                          | **outbound-firewall**                                   |
+    | Zieltyp                    | **IP-Adressen**                                        |
+    | Ziel-IP-Adressen/CIDR-Bereich | **0.0.0.0/0**                                           |
+    | Typ des nächsten Hops                       | **Virtuelles Gerät**                                   |
+    | Adresse des nächsten Hops                    | **private IP-Adresse der zuvor erfassten Firewall** |
 
 1. Wählen Sie **Hinzufügen** aus.
 
 [Erfahren Sie mehr über das Erstellen von Routen](https://docs.microsoft.com/azure/virtual-network/manage-route-table#add-a-route).
 
-Der ausgehende Datenverkehr vom Front-End- und Back-End-Subnetz wird nun an die Firewall weitergeleitet. 
-
-
+Der ausgehende Datenverkehr vom Front-End- und Back-End-Subnetz wird nun an die Firewall weitergeleitet.
