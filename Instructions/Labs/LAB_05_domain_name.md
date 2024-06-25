@@ -8,16 +8,15 @@ lab:
 
 ## Szenario
 
-Ihre Organisation benötigt, dass Workloads Domänennamen intern in virtuellen Netzwerken aufzeichnen und auflösen. Virtuelle Computer in virtuellen Netzwerken können den Domänennamen anstelle von IP-Adressen für die interne Kommunikation verwenden. In diesem Fall werden die Domänennamen mit einer privaten DNS-Zone über eine virtuelle Netzwerkverknüpfung aufgelöst. 
-
-
+Ihre Organisation benötigt, dass Workloads Domänennamen intern in virtuellen Netzwerken aufzeichnen und auflösen. Virtuelle Computer in virtuellen Netzwerken können den Domänennamen anstelle von IP-Adressen für die interne Kommunikation verwenden. In diesem Fall werden die Domänennamen mit einer privaten DNS-Zone über eine virtuelle Netzwerkverknüpfung aufgelöst.
 
 ### Architekturdiagramm
 
 ![Diagramm der Verbindung von Azure DNS mit einem virtuellen Netzwerk](../Media/task-5.png)
 
 ### Qualifikationsaufgaben
-- Erstellen und Konfigurieren einer privaten DNS-Zone 
+
+- Erstellen und Konfigurieren einer privaten DNS-Zone
 - Erstellen und Konfigurieren von DNS-Einträgen.
 - Konfigurieren von DNS-Einstellungen in einem virtuellen Netzwerk.
 
@@ -33,12 +32,12 @@ Privates Azure-DNS bietet einen zuverlässigen, sicheren DNS-Dienst zum Verwalte
 
 1. Geben Sie auf der Registerkarte **Grundeinstellungen** von „Private DNS-Zone erstellen“ die Informationen aus der folgenden Tabelle ein:
 
-    | Eigenschaft | Wert    |
-    |:---------|:---------|
-    |Abonnement|**Wählen Sie Ihr Abonnement aus**|
-    |Ressourcengruppe|**RG1**|
-    |Name|**contoso.com**|
-    |Region|**USA, Osten**|
+    | Eigenschaft       | Wert                        |
+    | :------------- | :--------------------------- |
+    | Abonnement   | **Wählen Sie Ihr Abonnement aus** |
+    | Ressourcengruppe | **RG1**                      |
+    | Name           | **contoso.com**              |
+    | Region         | **USA, Osten**                  |
 
 1. Wählen Sie **Überprüfen + erstellen** und anschließend **Erstellen** aus.
 
@@ -54,11 +53,11 @@ Privates Azure-DNS bietet einen zuverlässigen, sicheren DNS-Dienst zum Verwalte
 
 1. Verwenden Sie auf der Registerkarte **Grundeinstellungen** die Informationen aus der folgenden Tabelle, um das virtuelle Netzwerk zu erstellen.
 
-    | Eigenschaft | Wert    |
-    |:---------|:---------|
-    |Linkname|**app-vnet-link**|
-    |Virtuelles Netzwerk|**app-vnet**|
-    |Automatische Registrierung aktivieren|**Aktiviert**|
+    | Eigenschaft                 | Wert             |
+    | :----------------------- | :---------------- |
+    | Linkname                | **app-vnet-link** |
+    | Virtuelles Netzwerk          | **app-vnet**      |
+    | Automatische Registrierung aktivieren | **Aktiviert**       |
 
 1. Wählen Sie **OK** aus.
 
@@ -72,13 +71,12 @@ Privates Azure-DNS bietet einen zuverlässigen, sicheren DNS-Dienst zum Verwalte
 
 1. Geben Sie auf der Registerkarte **Grundeinstellungen** von „Datensatzgruppe erstellen“ die Informationen aus der folgenden Tabelle ein:
 
-    | Eigenschaft | Wert    |
-    |:---------|:---------|
-    |Name|**backend**|
-    |Typ|**A**|
-    |TTL|**1**|
-    |IP-Adresse|**10.1.1.4**|
-
+    | Eigenschaft   | Wert        |
+    | :--------- | :----------- |
+    | Name       | **backend**  |
+    | type       | **A**        |
+    | TTL        | **1**        |
+    | IP-Adresse | **10.1.1.4** |
 
 1. Wählen Sie **OK** aus.
 

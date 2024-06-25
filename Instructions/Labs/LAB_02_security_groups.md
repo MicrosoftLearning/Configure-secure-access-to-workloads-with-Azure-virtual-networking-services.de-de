@@ -33,12 +33,12 @@ Mithilfe einer Anwendungssicherheitsgruppe (ASG) können Sie Server mit ähnlich
 
     Geben Sie auf der Registerkarte **Grundeinstellungen** von „Anwendungssicherheitsgruppe erstellen“ die Informationen aus der folgenden Tabelle ein:
 
-    | Eigenschaft | Wert    |
-    |:---------|:---------|
-    |Abonnement|**Wählen Sie Ihr Abonnement aus**|
-    |Ressourcengruppe|**RG1**|
-    |Name|**app-backend-asg**|
-    |Region|**USA, Osten**|
+    | Eigenschaft       | Wert                        |
+    | :------------- | :--------------------------- |
+    | Abonnement   | **Wählen Sie Ihr Abonnement aus** |
+    | Ressourcengruppe | **RG1**                      |
+    | Name           | **app-backend-asg**          |
+    | Region         | **USA, Osten**                  |
 
 1. Wählen Sie **Überprüfen + erstellen** und anschließend **Erstellen** aus.
 
@@ -56,12 +56,12 @@ Eine Netzwerksicherheitsgruppe (NSG) schützt den Netzwerkdatenverkehr in Ihrem 
 
     Geben Sie auf der Registerkarte **Grundeinstellungen** von „Netzwerksicherheitsgruppe erstellen“ die Informationen aus der folgenden Tabelle ein:
 
-    | Eigenschaft | Wert    |
-    |:---------|:---------|
-    |Abonnement|**Wählen Sie Ihr Abonnement aus**|
-    |Ressourcengruppe|**RG1**|
-    |Name|**app-vnet-nsg**|
-    |Region|**USA, Osten**|
+    | Eigenschaft       | Wert                        |
+    | :------------- | :--------------------------- |
+    | Abonnement   | **Wählen Sie Ihr Abonnement aus** |
+    | Ressourcengruppe | **RG1**                      |
+    | Name           | **app-vnet-nsg**             |
+    | Region         | **USA, Osten**                  |
 
     [Erfahren Sie mehr über das Erstellen einer Netzwerksicherheitsgruppe](https://docs.microsoft.com/azure/virtual-network/tutorial-filter-network-traffic#create-a-network-security-group).
 
@@ -82,6 +82,7 @@ In diesem Abschnitt ordnen Sie die Netzwerksicherheitsgruppe dem Subnetz des zuv
     [Erfahren Sie mehr über das Zuordnen einer Netzwerksicherheitsgruppe zu einem Subnetz](https://docs.microsoft.com/azure/virtual-network/tutorial-filter-network-traffic#associate-a-network-security-group-to-a-subnet).
 
 ### Erstellen von Regeln für Netzwerksicherheitsgruppen
+
 Eine Netzwerksicherheitsgruppe (NSG) schützt den Netzwerkdatenverkehr in Ihrem virtuellen Netzwerk.
 
 1. Geben Sie im Suchfeld oben im Portal **Netzwerksicherheitsgruppen** ein. Wählen Sie in den Suchergebnissen Netzwerksicherheitsgruppen aus.
@@ -94,16 +95,16 @@ Eine Netzwerksicherheitsgruppe (NSG) schützt den Netzwerkdatenverkehr in Ihrem 
 
 1. Geben Sie auf der Seite **Eingangssicherheitsregel hinzufügen** die Informationen aus der folgenden Tabelle ein:
 
-    | Eigenschaft | Wert    |
-    |:---------|:---------|
-    |Quelle|**Alle**|
-    |Quellportbereiche|**\***|
-    |Ziel|**Anwendungssicherheitsgruppe**|
-    |Ziel-Anwendungssicherheitsgruppe|**app-backend-asg**|    
-    |Dienst|**SSH**|
-    |Aktion|**Zulassen**|
-    |Priorität|**100**|
-    |Name|**AllowSSH**|
+    | Eigenschaft                               | Value                          |
+    | :------------------------------------- | :----------------------------- |
+    | Quelle                                 | **Alle**                        |
+    | Quellportbereiche                     | **\***                         |
+    | Ziel                            | **Anwendungssicherheitsgruppe** |
+    | Ziel-Anwendungssicherheitsgruppe | **app-backend-asg**            |
+    | Dienst                                | **SSH**                        |
+    | Aktion                                 | **Zulassen**                      |
+    | Priorität                               | **100**                        |
+    | Name                                   | **AllowSSH**                   |
 
     [Erfahren Sie mehr über das Erstellen einer Netzwerksicherheitsgruppen-Regel](https://docs.microsoft.com/azure/virtual-network/tutorial-filter-network-traffic#create-a-network-security-group).
 
@@ -132,17 +133,17 @@ Eine Netzwerksicherheitsgruppe (NSG) schützt den Netzwerkdatenverkehr in Ihrem 
 1. Wiederholen Sie den vorherigen Schritt für **VM2**.
 
 ### Zuordnen der Anwendungssicherheitsgruppe zur Netzwerkschnittstelle der VM
+
 Als Sie die VMs erstellt haben, hat Azure eine Netzwerkschnittstelle für jede VM erstellt und an die VM angefügt.
 
 Fügen Sie die Netzwerkschnittstelle von VM2 die Anwendungssicherheitsgruppe hinzu, die Sie zuvor erstellt haben.
 
 1. Navigieren Sie im Azure-Portal zu Ihrer Ressourcengruppe **RG1**, und wählen Sie **VM2** aus.
 
-1. Navigieren Sie zur Registerkarte „Netzwerk“ der VM, und wählen Sie **+ Anwendungssicherheitsgruppen hinzufügen** im Abschnitt **Anwendungssicherheitsgruppen** aus. 
+1. Navigieren Sie zur Registerkarte „Netzwerk“ der VM, und wählen Sie **+ Anwendungssicherheitsgruppen hinzufügen** im Abschnitt **Anwendungssicherheitsgruppen** aus.
 
 1. Wählen Sie **app-backend-asg** in der Liste der Anwendungssicherheitsgruppen aus.
 
 1. Wählen Sie **Hinzufügen** aus.
 
   [Erfahren Sie mehr über das Hinzufügen einer NIC zu einer Anwendungssicherheitsgruppe](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-network-interface?tabs=azure-portal#add-or-remove-from-application-security-groups).
-
