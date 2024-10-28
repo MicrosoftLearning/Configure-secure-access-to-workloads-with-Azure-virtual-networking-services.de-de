@@ -23,58 +23,61 @@ Sie wurden beauftragt, [Zero-Trust-Prinzipien](https://learn.microsoft.com/secur
 ## Übungsanweisungen
 
 >**Hinweis**: Um dieses Lab abzuschließen, benötigen Sie ein [Azure-Abonnement](https://azure.microsoft.com/free/) mit der zugewiesenen RBAC-Rolle **Contributor**.
+
 > Wenn Sie in diesem Lab aufgefordert werden, eine Ressource zu erstellen, verwenden Sie für alle Eigenschaften, die nicht angegeben sind, den Standardwert.
 
 ### Erstellen von Hub-and-Spoke-VNets und -Subnetzen
 
 Beginnen Sie mit dem Erstellen der virtuellen Netzwerke, die im obigen Diagramm gezeigt werden.
 
-1. Öffnen Sie einen Browser, navigieren Sie zum <a href="https://portal.azure.com/#home">Azure-Portal</a>, und melden Sie sich an.
-1. Geben Sie zum Erstellen eines virtuellen Netzwerks oben im Portal in die Suchleiste **Virtuelle Netzwerke** ein, und wählen Sie in den Suchergebnissen **Virtuelle Netzwerke** aus.
-1. Wählen Sie im Portalbereich **Virtuelle Netzwerke** die Option **+ Erstellen** aus.
-1. Füllen Sie alle Registerkarten des Erstellungsprozesses aus, indem Sie die Werte in der folgenden Tabelle verwenden:
+1. Melden Sie sich beim **Azure-Portal** - `https://portal.azure.com` an.
+   
+1. Suchen Sie nach `Virtual Networks`, und wählen Sie diese Option aus.
+   
+1. Wählen Sie **+ Erstellen** und schließen Sie die Konfiguration des **app-vnet** ab. Dieses virtuelle Netzwerk benötigt zwei Subnetze, **Frontend** und **Backend**. 
 
     | Eigenschaft             | Wert           |
     | :------------------- | :-------------- |
     | Ressourcengruppe       | **RG1**         |
-    | Name                 | **app-vnet**    |
+    | Name des virtuellen Netzwerks | `app-vnet`    |
     | Region               | **USA, Osten**     |
     | IPv4-Adressraum   | **10.1.0.0/16** |
-    | Subnetzname          | **frontend**    |
+    | Subnetzname          | `frontend`    |
     | Subnetzadressbereich | **10.1.0.0/24** |
-    | Subnetzname          | **backend**     |
+    | Subnetzname          | `backend`     |
     | Subnetzadressbereich | **10.1.1.0/24** |
 
-    **Hinweis**: Behalten Sie für alle anderen Einstellungen die Standardwerte bei. Wählen Sie **Weiter** aus, um zur nächsten Registerkarte zu wechseln, und dann **Erstellen**, um das virtuelle Netzwerk zu erstellen.
-1. Erstellen Sie mit den gleichen Schritten wie oben das virtuelle Azure-Netzwerk **Hub-vnet**, indem Sie die Werte in der folgenden Tabelle verwenden:
+    **Hinweis**: Behalten Sie für alle anderen Einstellungen die Standardwerte bei. Wählen Sie nach Abschluss **Überprüfen + erstellen** und danach **Erstellen**.
+   
+1. Erstellen Sie die virtuelle Netzwerkkonfiguration **Hub-vnet**. Dieses virtuelle Netzwerk enthält das Firewall-Subnetz. 
 
     | Eigenschaft             | Wert                    |
     | :------------------- | :----------------------- |
     | Ressourcengruppe       | **RG1**                  |
-    | Name                 | **Hub-vnet** |
+    | Name                 | `hub-vnet` |
     | Region               | **USA, Osten**              |
     | IPv4-Adressraum   | **10.0.0.0/16**          |
     | Subnetzname          | **AzureFirewallSubnet**  |
     | Subnetzadressbereich | **10.0.0.0/24**          |
 
-1. Nach Abschluss der Bereitstellung: Navigieren Sie zurück zum Portal, geben Sie in die Suchleiste **Ressourcengruppen** ein, und wählen Sie **Ressourcengruppen** in den Ergebnisse aus. Wählen Sie im Hauptbereich **RG1** aus, und bestätigen Sie, dass beide virtuellen Netzwerke bereitgestellt wurden.
+1. Sobald die Bereitstellungen abgeschlossen sind, suchen Sie nach Ihrer **Ressourcengruppe** und wählen Sie diese aus. Vergewissern Sie sich, dass Ihre neuen virtuellen Netzwerke Teil der Ressourcengruppe sind. 
 
-### Einrichten einer Peerbeziehung zwischen den virtuellen Netzwerken
+### Konfigurieren einer Peer-Beziehung zwischen den virtuellen Netzwerken
 
-1. Das Einrichten einer Peerbeziehung zwischen den beiden virtuellen Netzwerken ermöglicht den Datenverkehr in beide Richtungen zwischen den virtuellen Netzwerken **app-vnet** und **hub-vnet**.
-1. Im Portal in der Ressourcengruppenansicht für RG1. Wählen Sie als virtuelles Netzwerk **app-vnet** aus.
-1. Scrollen Sie im Kontextmenü **app-vnet** auf der linken Seite des Portals nach unten, und wählen Sie **Peerings** aus.
-1. Wählen Sie im Peerings-Bereich **app-vnet** die Option **+ Hinzufügen** aus.
-1. Füllen Sie das Formular mit den Werten aus der folgenden Tabelle aus:
+1. Suchen Sie das virtuelle Netzwerk `app-vnet` und wählen Sie es aus.
+   
+1. Wählen Sie im Blatt **Einstellungen** die Option **Peerings**.
+   
+1. Wählen Sie die Schaltfläche **+ Hinzufügen** eines Peerings zwischen den beiden virtuellen Netzwerken. 
 
     | Eigenschaft                                 | Wert                          |
     | :--------------------------------------- | :----------------------------- |
-    | Dieses virtuelle Netzwerk: Name des Peeringlinks   | **app-vnet-to-hub** |
-    | Virtuelles Remotenetzwerk: Name des Peeringlinks | **hub-to-app-vnet** |
-    | Virtuelles Netzwerk                          | **hub-vnet**       |
+    | Name des Peeringlinks              | `app-vnet-to-hub` |
+    | Virtuelles Netzwerk    | `hub-vnet` |
+    | Name der Peering-Verbindung des lokalen virtuellen Netzwerks | `hub-to-app-vnet` |
 
     **Hinweis**: Behalten Sie für alle anderen Einstellungen die Standardwerte bei. Wählen Sie **Hinzufügen** aus, um ein neues Peering virtueller Netzwerke zu erstellen.
 
     [Erfahren Sie mehr über das Peering virtueller Netzwerke](https://learn.microsoft.com/azure/virtual-network/virtual-network-manage-peering?tabs=peering-portal)
 
-1. Nach Abschluss des Vorgangs und nach dem Update der Konfiguration. Überprüfen Sie, ob der **Peeringstatus** auf **Verbunden** festgelegt ist. (Möglicherweise müssen Sie die Seite aktualisieren, damit der aktualisierte Status angezeigt wird.)
+1. Sobald die Bereitstellung abgeschlossen ist, überprüfen Sie, ob der **Peering-Status** als **Verbunden** angezeigt wird. 

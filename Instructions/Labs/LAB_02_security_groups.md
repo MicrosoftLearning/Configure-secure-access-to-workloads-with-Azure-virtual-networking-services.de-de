@@ -27,17 +27,15 @@ Ihre Organisation benötigt die Steuerung des ein- und ausgehenden Netzwerkdaten
 
 Mithilfe einer Anwendungssicherheitsgruppe (ASG) können Sie Server mit ähnlichen Funktionen gruppieren (z. B. Webserver).
 
-1. Geben Sie im Suchfeld oben im Portal **Anwendungssicherheitsgruppe** ein. Wählen Sie in den Suchergebnissen Anwendungssicherheitsgruppen aus.
-
-1. Wählen Sie **+ Erstellen** aus.
-
-    Geben Sie auf der Registerkarte **Grundeinstellungen** von „Anwendungssicherheitsgruppe erstellen“ die Informationen aus der folgenden Tabelle ein:
+1. Suchen Sie im Portal die Option `Application security groups`, und wählen Sie sie aus.
+   
+1. Wählen Sie **+ Erstellen** aus und konfigurieren Sie die Anwendungssicherheitsgruppe. 
 
     | Eigenschaft       | Wert                        |
     | :------------- | :--------------------------- |
     | Abonnement   | **Wählen Sie Ihr Abonnement aus** |
     | Ressourcengruppe | **RG1**                      |
-    | Name           | **app-backend-asg**          |
+    | Name           | `app-backend-asg`          |
     | Region         | **USA, Osten**                  |
 
 1. Wählen Sie **Überprüfen + erstellen** und anschließend **Erstellen** aus.
@@ -50,34 +48,30 @@ Mithilfe einer Anwendungssicherheitsgruppe (ASG) können Sie Server mit ähnlich
 
 Eine Netzwerksicherheitsgruppe (NSG) schützt den Netzwerkdatenverkehr in Ihrem virtuellen Netzwerk. NSGs enthalten eine Liste mit Sicherheitsregeln, mit denen Netzwerkdatenverkehr für Ressourcen, die mit virtuellen Azure-Netzwerken (VNet) verbunden sind, zugelassen oder abgelehnt wird. NSGs können Subnetzen und/oder einzelnen Netzwerkschnittstellen zugeordnet werden, die mit virtuellen Computern (VM) verbunden sind.
 
-1. Geben Sie im Suchfeld oben im Portal **Netzwerksicherheitsgruppen** ein. Wählen Sie in den Suchergebnissen **Netzwerksicherheitsgruppen** aus.
+1. Suchen Sie im Portal die Option `Network security group`, und wählen Sie sie aus.
 
-1. Wählen Sie **+ Erstellen** aus.
-
-    Geben Sie auf der Registerkarte **Grundeinstellungen** von „Netzwerksicherheitsgruppe erstellen“ die Informationen aus der folgenden Tabelle ein:
+1. Wählen Sie **+ Erstellen** und konfigurieren Sie die Netzwerksicherheitsgruppe. 
 
     | Eigenschaft       | Wert                        |
     | :------------- | :--------------------------- |
     | Abonnement   | **Wählen Sie Ihr Abonnement aus** |
     | Ressourcengruppe | **RG1**                      |
-    | Name           | **app-vnet-nsg**             |
+    | Name           | `app-vnet-nsg`            |
     | Region         | **USA, Osten**                  |
 
     [Erfahren Sie mehr über das Erstellen einer Netzwerksicherheitsgruppe](https://docs.microsoft.com/azure/virtual-network/tutorial-filter-network-traffic#create-a-network-security-group).
 
 1. Wählen Sie **Überprüfen + erstellen** und anschließend **Erstellen** aus.
 
-In diesem Abschnitt ordnen Sie die Netzwerksicherheitsgruppe dem Subnetz des zuvor erstellten virtuellen Netzwerks zu.
+**Verknüpfen Sie die NSG mit dem App-VNet-Backend.**
 
-1. Geben Sie im Suchfeld oben im Portal **Netzwerksicherheitsgruppen** ein. Wählen Sie in den Suchergebnissen Netzwerksicherheitsgruppen aus.
+1. Wählen Sie **Zur Ressource gehen** oder navigieren Sie zur Ressource **app-vnet-nsg**.
 
-1. Wählen Sie in der Liste der Netzwerksicherheitsgruppen **app-vnet-nsg** aus.
+1. Wählen Sie auf dem Blatt **Einstellungen** die Option **Subnetze** aus.
 
-1. Wählen Sie **Subnetze** im Abschnitt „Einstellungen“ von **app-vnet-nsg** aus.
+1. Wählen Sie **+ Zuordnen** aus.
 
-1. Wählen Sie auf der Seite „Subnetze“ die Option **+ Zuordnen** aus.
-
-1. Wählen Sie unter **Subnetz zuordnen** die Option **app-vnet (RG1)** für „Virtuelles Netzwerk“ aus, und wählen Sie **Back-End** für „Subnetz“ und dann „OK“ aus.
+1. Wählen Sie **app-vnet (RG1)** und dann das **Backend**-Subnetz. Wählen Sie **OK** aus.
 
     [Erfahren Sie mehr über das Zuordnen einer Netzwerksicherheitsgruppe zu einem Subnetz](https://docs.microsoft.com/azure/virtual-network/tutorial-filter-network-traffic#associate-a-network-security-group-to-a-subnet).
 
