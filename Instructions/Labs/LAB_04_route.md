@@ -1,91 +1,85 @@
 ---
 lab:
-  title: 'Übung: Weiterleiten von Datenverkehr an die Firewall'
+  title: 'Übung 04: Konfigurieren des Netzwerkroutings'
   module: Guided Project - Configure secure access to workloads with Azure virtual networking services
 ---
 
-# Lab: Weiterleiten von Datenverkehr an die Firewall
+# Übung 04: Konfigurieren des Netzwerkroutings
 
 ## Szenario
 
-Nachdem nun eine Firewall mit Richtlinien eingerichtet wurde, die die Sicherheitsanforderungen Ihrer Organisation erzwingen, müssen Sie Ihren Netzwerkdatenverkehr an das Firewallsubnetz weiterleiten, damit es den Datenverkehr filtern und überprüfen kann. Routingtabellen ermöglichen die Steuerung des Routings von Netzwerkdatenverkehr zu und von der Webanwendung. Die Firewallregeln werden auf den Netzwerkdatenverkehr angewendet, wenn Sie Ihren Netzwerkdatenverkehr als Subnetz-Standardgateway an die Firewall weiterleiten.
+Um das Erzwingen der Richtlinien der Firewall zu gewährleisten, muss der abgehende Anwendungsverkehr durch die Firewall geleitet werden. Sie ermitteln diese Anforderungen. 
++ Es ist eine Routentabelle erforderlich. Diese Routentabelle wird den Frontend- und Back-End-Subnetzen zugeordnet.  
++ Eine Route ist erforderlich, um den gesamten ausgehenden IP-Verkehr von den Subnetzen zur Firewall zu filtern. Es wird die private IP-Adresse der Firewall verwendet. 
 
-### Architekturdiagramm
+## Qualifikationsaufgaben
+
++ Erstellen und Konfigurieren einer Routingtabelle.
++ Verknüpfen Sie eine Routingtabelle mit einem Subnetz.
+  
+## Architekturdiagramm
 
 ![Diagramm, das ein virtuelles Netzwerk mit einer Firewall und einer Routingtabelle zeigt](../Media/task-3.png)
 
-### Qualifikationsaufgaben
 
-- Erstellen und Konfigurieren einer Routingtabelle.
-- Verknüpfen Sie eine Routingtabelle mit einem Subnetz.
-  
 ## Übungsanweisungen
 
 ### Erstellen einer Routingtabelle
 
-1. Notieren Sie die private und öffentliche IP-Adresse von **app-vnet-firewall**.
+Azure erstellt automatisch eine [Routentabelle](https://learn.microsoft.com/azure/virtual-network/virtual-networks-udr-overview) für jedes Subnetz innerhalb eines virtuellen Azure-Netzwerks. Die Tabelle enthält die Standard-[Systemrouten](https://learn.microsoft.com/azure/virtual-network/virtual-networks-udr-overview#system-routes). Sie können Routentabellen und Routen erstellen, um die standardmäßigen Systemrouten von Azure außer Kraft zu setzen.
 
-    1. Geben Sie in das Suchfeld am oberen Rand des Portals **Firewall** ein. Wählen Sie **Firewall** in den Suchergebnissen aus.
+**Aufzeichnen der privaten IP-Adresse von app-vnet-firewall**
 
-    1. Wählen Sie **app-vnet-firewall** aus.
+1. Geben Sie in das Suchfeld am oberen Rand des Portals **Firewall** ein. Wählen Sie **Firewall** in den Suchergebnissen aus.
 
-    1. Wählen Sie **Übersicht** aus.
+1. Wählen Sie **app-vnet-firewall** aus.
 
-        1. Notieren Sie die **private IP-Adresse**.
+1. Wählen Sie **Übersicht** aus und notieren Sie sich die **Private IP-Adresse**.
 
-    1. Wählen Sie im Bereich „Übersicht“ **fwpip** aus.
-
-    1. Notieren Sie die **öffentliche IP-Adresse**.
+**Hinzufügen der Routentabelle**
 
 1. Geben Sie **Routingtabellen** in das Suchfeld ein. Wählen Sie „Routingtabelle“ aus, wenn diese Option in den Suchergebnissen angezeigt wird.
 
-1. Wählen Sie auf der Seite „Routingtabellen“ **+ Erstellen** aus.
-
-1. Geben Sie auf der Registerkarte **Grundeinstellungen** von „Routingtabelle erstellen“ die Informationen aus der folgenden Tabelle ein.
+1. Wählen Sie auf der Seite Routentabelle **+ Erstellen** und erstellen Sie die Routentabelle. 
 
     | Eigenschaft       | Wert                        |
     | :------------- | :--------------------------- |
     | Abonnement   | **Wählen Sie Ihr Abonnement aus** |
     | Ressourcengruppe | **RG1**                      |
     | Region         | **USA, Osten**                  |
-    | Name           | **app-vnet-firewall-rt**     |
+    | Name           | `app-vnet-firewall-rt`     |
 
-1. Wählen Sie **Überprüfen + erstellen** und anschließend **Erstellen** aus.
+1. Wählen Sie **Überprüfen und erstellen** und anschließend **Erstellen** aus.
 
-    [Erfahren Sie mehr über das Erstellen von Routingtabellen](https://docs.microsoft.com/azure/virtual-network/manage-route-table) und das [Zuordnen einer Routingtabelle zu einem Subnetz](https://docs.microsoft.com/azure/virtual-network/tutorial-create-route-table-portal#associate-a-route-table-to-a-subnet).
+1. Warten Sie, bis die Tabelle bereitgestellt wurde, und wählen Sie dann **Zur Ressource gehen** aus.  
 
 ### Zuordnen der Routingtabelle zu Subnetze
 
-1. Geben Sie **Routingtabellen** in das Suchfeld ein. Wählen Sie in den Suchergebnissen den Eintrag „Routingtabellen“ aus.
+1. Arbeiten Sie im Portal weiter mit der Routentabelle, wählen Sie **app-vnet-firewall-rt**.
 
-1. Wählen Sie **app-vnet-firewall-rt** aus.
+1. Im Blatt **Einstellungen** wählen Sie **Subnetze** und dann **+ Zuordnen**.
 
-1. Wählen Sie **Subnetze** aus.
-
-1. Wählen Sie **+ Zuordnen** aus.
-
-1. Geben Sie auf der Seite **Subnetz zuordnen** die Informationen aus der folgenden Tabelle ein:
+1. Konfigurieren Sie eine Zuordnung zum Frontend-Subnetz und wählen Sie dann **OK**.  
 
     | Eigenschaft        | Wert              |
     | :-------------- | :----------------- |
     | Virtuelles Netzwerk | **app-vnet** (RG1) |
     | Subnetz          | **frontend**       |
 
-1. Wählen Sie **OK** aus.
+1. Konfigurieren Sie eine Zuordnung zum Backend-Subnetz und wählen Sie dann **OK**.  
 
-1. Wiederholen Sie die obigen Schritte, um die Routingtabelle **app-vnet-firewall-rt** dem Subnetz **backend** in **app-vnet** zuzuordnen.
+    | Eigenschaft        | Wert              |
+    | :-------------- | :----------------- |
+    | Virtuelles Netzwerk | **app-vnet** (RG1) |
+    | Subnetz          | **frontend**       |
 
 ### Erstellen einer Route in einer Routingtabelle
 
-1. Geben Sie **Routingtabellen** in das Suchfeld ein. Wählen Sie in den Suchergebnissen den Eintrag „Routingtabellen“ aus.
+1. Arbeiten Sie im Portal weiter mit der Routentabelle, wählen Sie **app-vnet-firewall-rt**.
 
-1. Wählen Sie **app-vnet-firewall-rt** aus.
+1. Im Blatt **Einstellungen** wählen Sie **Routen** und dann **+ Hinzufügen**.
 
-1. Wählen Sie die Option **Routen**.
-
-1. Wählen Sie **+ Hinzufügen** aus.
-
-1. Geben Sie auf der Seite **Route hinzufügen** die Informationen aus der folgenden Tabelle ein:
+1. Konfigurieren Sie die Route und wählen Sie dann **Hinzufügen**. 
 
     | Eigenschaft                            | Wert                                                   |
     | :---------------------------------- | :------------------------------------------------------ |
@@ -93,10 +87,18 @@ Nachdem nun eine Firewall mit Richtlinien eingerichtet wurde, die die Sicherheit
     | Zieltyp                    | **IP-Adressen**                                        |
     | Ziel-IP-Adressen/CIDR-Bereich | **0.0.0.0/0**                                           |
     | Typ des nächsten Hops                       | **Virtuelles Gerät**                                   |
-    | Adresse des nächsten Hops                    | **private IP-Adresse der zuvor erfassten Firewall** |
+    | Adresse des nächsten Hops                    | **private IP-Adresse der Firewall** |
 
-1. Wählen Sie **Hinzufügen** aus.
 
-[Erfahren Sie mehr über das Erstellen von Routen](https://docs.microsoft.com/azure/virtual-network/manage-route-table#add-a-route).
+### Erfahren Sie mehr in Onlineschulungen
 
-Der ausgehende Datenverkehr vom Front-End- und Back-End-Subnetz wird nun an die Firewall weitergeleitet.
++ [Verwalten und Steuern des Datenverkehrsflusses mit Routen in Ihrer Azure-Bereitstellung](https://learn.microsoft.com/training/modules/control-network-traffic-flow-with-routes/): In diesem Modul lernen Sie, wie Sie den virtuellen Netzwerkverkehr von Azure durch die Implementierung benutzerdefinierter Routen steuern können. Dieses Modul verfügt über zwei Sandbox-Umgebungen. 
+
+### Wichtige Erkenntnisse
+
+Herzlichen Glückwunsch zum Abschluss der Übung. Hier sind die wichtigsten Erkenntnisse:
+
++ Der Netzwerkdatenverkehr wird automatisch über Azure-Subnetze, virtuelle Netzwerke und lokale Netzwerke geleitet. Systemrouten steuern dieses Routing.
++ Benutzerdefinierte Routen setzen die Standard-Systemrouten außer Kraft, so dass der Datenverkehr über virtuelle Netzwerkgeräte (NVAs) geleitet werden kann. 
++ Virtuelle Netzwerkgeräte (NVAs) kontrollieren den Flow des Netzwerkverkehrs. Beispiele für NVAs sind Firewalls, Lastverteiler und Router.
++ Routentabellen enthalten Routing-Informationen und sind einem Subnetz zugeordnet. 

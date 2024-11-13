@@ -1,34 +1,37 @@
 ---
 lab:
-  title: 'Übung: Bereitstellen von Netzwerkisolation und -segmentierung für die Webanwendung'
+  title: 'Übung 01: Erstellen und Konfigurieren virtueller Netzwerke'
   module: Guided Project - Configure secure access to workloads with Azure virtual networking services
 ---
 
-# Lab: Bereitstellen eines virtuellen Netzwerks für gemeinsame Dienste mit Isolation und Segmentierung
+# Übung 01: Erstellen und Konfigurieren virtueller Netzwerke
 
 ## Szenario
 
-Sie wurden beauftragt, [Zero-Trust-Prinzipien](https://learn.microsoft.com/security/zero-trust/azure-infrastructure-networking) auf ein virtuelles Hubnetzwerk in Azure anzuwenden. Die IT-Abteilung benötigt Netzwerkisolation und -segmentierung für die Webanwendung in einem Spokenetzwerk. Um die Netzwerkisolation und -segmentierung für die Webanwendung bereitzustellen, müssen Sie ein virtuelles Azure-Netzwerk mit Subnetzen mit Adressraum erstellen, den das IT-Team bereitgestellt hat. Sobald das virtuelle Netzwerk erstellt ist, wird im nächsten Schritt das Peering virtueller Netzwerke konfiguriert. So können die virtuellen Netzwerke sicher und privat miteinander kommunizieren.
+Ihre Organisation migriert eine webbasierte Anwendung zu Azure. Ihre erste Aufgabe besteht darin, die virtuellen Netzwerke und Subnetze zu platzieren. Außerdem müssen die virtuellen Netzwerke sicher gepeert werden. Sie ermitteln diese Anforderungen. 
++ Zwei virtuelle Netzwerke sind erforderlich, **app-vnet** und **hub-vnet**. Dies simuliert eine Hub-and-Spoke-Netzwerkarchitektur. 
++ Das app-vnet wird die Anwendung hosten. Für dieses virtuelle Netzwerk sind zwei Subnetze erforderlich. Das **Frontend-Subnetz** wird die Webserver hosten. Das **Backend-Subnetz** wird die Datenbankserver hosten.
++ Das hub-vnet erfordert nur ein Subnetz für die Firewall. 
++ Die beiden virtuellen Netzwerke müssen in der Lage sein, über **virtuelles Netzwerk Peering** sicher und privat miteinander zu kommunizieren. 
++ Beide virtuellen Netze sollten sich in derselben Region befinden. 
 
-### Architekturdiagramm
+## Qualifikationsaufgabe
+
++ Erstellen Sie ein virtuelles Netzwerk.
++ Erstellen Sie ein Subnetz.
++ Konfigurieren des VNet-Peerings.
+
+## Architekturdiagramm
 
 ![Diagramm, das zwei gepeerte virtuelle Netzwerke zeigt](../Media/task-1.png)
 
-### Qualifikationsaufgaben
-
-- Erstellen eines virtuellen Netzwerks
-- Erstellen eines Subnetzes
-- Konfigurieren des VNet-Peerings
-
 ## Übungsanweisungen
 
->**Hinweis**: Um dieses Lab abzuschließen, benötigen Sie ein [Azure-Abonnement](https://azure.microsoft.com/free/) mit der zugewiesenen RBAC-Rolle **Contributor**.
-
-> Wenn Sie in diesem Lab aufgefordert werden, eine Ressource zu erstellen, verwenden Sie für alle Eigenschaften, die nicht angegeben sind, den Standardwert.
+**Hinweis**: Um dieses Lab abzuschließen, benötigen Sie ein [Azure-Abonnement](https://azure.microsoft.com/free/) mit der zugewiesenen RBAC-Rolle **Contributor**. Wenn Sie in diesem Lab aufgefordert werden, eine Ressource zu erstellen, verwenden Sie für alle Eigenschaften, die nicht angegeben sind, den Standardwert.
 
 ### Erstellen von Hub-and-Spoke-VNets und -Subnetzen
 
-Beginnen Sie mit dem Erstellen der virtuellen Netzwerke, die im obigen Diagramm gezeigt werden.
+Ein [Azure Virtual Network](https://learn.microsoft.com/azure/virtual-network/virtual-networks-overview) aktiviert viele Typen von Azure-Ressourcen für die sichere Kommunikation untereinander, mit dem Internet und mit lokalen Netzwerken. Alle Azure-Ressourcen in einem virtuellen Netzwerk werden in [Subnetzen](https://learn.microsoft.com/azure/virtual-network/virtual-network-manage-subnet?tabs=azure-portal) innerhalb des virtuellen Netzwerks bereitgestellt. 
 
 1. Melden Sie sich beim **Azure-Portal** - `https://portal.azure.com` an.
    
@@ -47,7 +50,7 @@ Beginnen Sie mit dem Erstellen der virtuellen Netzwerke, die im obigen Diagramm 
     | Subnetzname          | `backend`     |
     | Subnetzadressbereich | **10.1.1.0/24** |
 
-    **Hinweis**: Behalten Sie für alle anderen Einstellungen die Standardwerte bei. Wählen Sie nach Abschluss **Überprüfen + erstellen** und danach **Erstellen**.
+    **Hinweis**:Belassen Sie alle anderen Einstellungen auf ihren Standardwerten. Wählen Sie nach Abschluss **Überprüfen + erstellen** und danach **Erstellen**.
    
 1. Erstellen Sie die virtuelle Netzwerkkonfiguration **Hub-vnet**. Dieses virtuelle Netzwerk enthält das Firewall-Subnetz. 
 
@@ -60,9 +63,13 @@ Beginnen Sie mit dem Erstellen der virtuellen Netzwerke, die im obigen Diagramm 
     | Subnetzname          | **AzureFirewallSubnet**  |
     | Subnetzadressbereich | **10.0.0.0/24**          |
 
-1. Sobald die Bereitstellungen abgeschlossen sind, suchen Sie nach Ihrer **Ressourcengruppe** und wählen Sie diese aus. Vergewissern Sie sich, dass Ihre neuen virtuellen Netzwerke Teil der Ressourcengruppe sind. 
+1. Sobald die Bereitstellung abgeschlossen ist, suchen Sie nach Ihren „virtuellen Netzwerken“ und wählen diese aus.
+
+1. Überprüfen Sie, ob Ihre virtuellen Netzwerke und Subnetze bereitgestellt wurden. 
 
 ### Konfigurieren einer Peer-Beziehung zwischen den virtuellen Netzwerken
+
+[Peering virtueller Netzwerke](https://learn.microsoft.com/azure/virtual-network/virtual-network-peering-overview) aktiviert die nahtlose Verbindung von zwei oder mehr virtuellen Netzwerken in Azure. 
 
 1. Suchen Sie das virtuelle Netzwerk `app-vnet` und wählen Sie es aus.
    
@@ -72,12 +79,24 @@ Beginnen Sie mit dem Erstellen der virtuellen Netzwerke, die im obigen Diagramm 
 
     | Eigenschaft                                 | Wert                          |
     | :--------------------------------------- | :----------------------------- |
-    | Name des Peeringlinks              | `app-vnet-to-hub` |
+    | Name des Remote-Peeringlinks              | `app-vnet-to-hub` |
     | Virtuelles Netzwerk    | `hub-vnet` |
     | Name der Peering-Verbindung des lokalen virtuellen Netzwerks | `hub-to-app-vnet` |
 
     **Hinweis**: Behalten Sie für alle anderen Einstellungen die Standardwerte bei. Wählen Sie **Hinzufügen** aus, um ein neues Peering virtueller Netzwerke zu erstellen.
 
-    [Erfahren Sie mehr über das Peering virtueller Netzwerke](https://learn.microsoft.com/azure/virtual-network/virtual-network-manage-peering?tabs=peering-portal)
+1. Sobald die Bereitstellung abgeschlossen ist, überprüfen Sie, ob der **Peering-Status** **Verbunden** lautet.
 
-1. Sobald die Bereitstellung abgeschlossen ist, überprüfen Sie, ob der **Peering-Status** als **Verbunden** angezeigt wird. 
+## Erfahren Sie mehr in Onlineschulungen
+
++ [Einführung in Azure Virtual Network](https://learn.microsoft.com/training/modules/introduction-to-azure-virtual-networks/): In diesem Modul erfahren Sie, wie Sie Azure-Netzwerkdienste entwerfen und implementieren. Sie erfahren mehr über virtuelle Netzwerke, öffentliche und private IPs, DNS, virtuelles Netzwerk-Peering, Routing und Azure Virtual NAT.
+
+## Wichtige Erkenntnisse
+
+Herzlichen Glückwunsch zum Abschluss der Übung. Hier sind die wichtigsten Erkenntnisse:
+
++ Virtuelle Netzwerke (VNets) von Azure stellen eine sichere und isolierte Cloudumgebung für Ihre Ressourcen bereit. Sie können pro Region und Abonnement mehrere virtuelle Netzwerke erstellen.
++ Beim Entwurf virtueller Netzwerke sollten Sie darauf achten, dass sich der VNet-Adressraum (CIDR-Block) nicht mit den anderen Netzwerkbereichen Ihres Unternehmens überschneidet.
++ Ein Subnetz ist ein Bereich von IP-Adressen im VNet. Sie können VNets in unterschiedlich große Subnetze unterteilen und so viele Subnetze erstellen, wie Sie für die Organisation und Sicherheit innerhalb des Abonnementlimits benötigen. Jedes Subnetz muss einen eindeutigen Adressbereich haben.
++ Bestimmte Azure-Dienste, wie z. B. Azure Firewall, erfordern ein eigenes Subnetz.
++ Das Peering virtueller Netzwerke ermöglicht das nahtlose Verbinden zweier virtueller Azure-Netzwerke. Die virtuellen Netzwerke werden für Verbindungszwecke als einzelnes Element angezeigt.

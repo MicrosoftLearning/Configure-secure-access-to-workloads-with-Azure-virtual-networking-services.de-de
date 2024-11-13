@@ -1,29 +1,31 @@
 ---
 lab:
-  title: 'Übung: Schützen der Webanwendung vor böswilligem Datenverkehr und Blockieren des nicht autorisierten Zugriffs'
+  title: 'Übung 03: Erstellen und Konfigurieren der Azure Firewall'
   module: Guided Project - Configure secure access to workloads with Azure virtual networking services
 ---
 
-# Lab: Schützen der Webanwendung vor böswilligem Datenverkehr und Blockieren des nicht autorisierten Zugriffs.
+# Übung 03: Erstellen und Konfigurieren der Azure Firewall
 
 ## Szenario
 
-Ihre Organisation möchte die Webanwendung vor böswilligem Datenverkehr schützen und nicht autorisierten Zugriff blockieren.
-
-Zusätzlich zu NSG und ASG kann eine Firewall konfiguriert werden, um der Webanwendung eine zusätzliche Sicherheitsebene hinzuzufügen. Eine Firewall schützt die Webanwendung vor böswilligem Datenverkehr und blockiert den nicht autorisierten Zugriff mit von Ihnen konfigurierten Richtlinien.
-
-Die Azure Firewallrichtlinie ist eine Ressource der obersten Ebene, die Sicherheits- und Betriebseinstellungen für Azure Firewall enthält. Mit ihr können Sie eine Regelhierarchie definieren und Compliance erzwingen. In dieser Aufgabe konfigurieren Sie Anwendungsregeln und Netzwerkregeln für die Firewall mithilfe der Firewallrichtlinie. Sie können Azure Firewallrichtlinien verwenden, um Regelsätze zu verwalten, die die Azure Firewall zum Filtern des Datenverkehrs verwendet.
-
-### Architekturdiagramm
-
-![Diagramm, das ein virtuelles Netzwerk mit einer Firewall und einer Routingtabelle zeigt](../Media/task-3.png)
+Ihr Unternehmen erfordert eine zentralisierte Netzwerksicherheit für das virtuelle Anwendungsnetzwerk. Mit zunehmender Nutzung der Anwendungen werden eine detailliertere Filterung auf Anwendungsebene und ein erweiterter Schutz vor Bedrohungen erforderlich sein. Außerdem ist zu erwarten, dass die Anwendung kontinuierliche Updates von Azure DevOps-Pipelines benötigt. Sie ermitteln diese Anforderungen.
++ Azure Firewall ist für zusätzliche Sicherheit im App-vnet erforderlich. 
++ Eine **Firewall-Richtlinie** sollte konfiguriert werden, um den Zugriff auf die Anwendung zu verwalten. 
++ Eine Firewall-Richtlinie **Anwendungsregel** ist erforderlich. Diese Regel ermöglicht der Anwendung den Zugriff auf Azure DevOps, damit der Anwendungscode aktualisiert werden kann. 
++ Eine Firewall-Richtlinie **Netzwerkregel** ist erforderlich. Diese Regel ermöglicht die DNS-Auflösung. 
 
 ### Qualifikationsaufgaben
 
-- Erstellen Sie eine Azure Firewall.
-- Erstellen und konfigurieren Sie eine Firewallrichtlinie.
-- Erstellen Sie eine Anwendungsregelsammlung.
-- Erstellen Sie eine Netzwerkregelsammlung.
++ Erstellen Sie eine Azure Firewall.
++ Erstellen und konfigurieren Sie eine Firewallrichtlinie.
++ Erstellen Sie eine Anwendungsregelsammlung.
++ Erstellen Sie eine Netzwerkregelsammlung.
+
+## Architekturdiagramm
+
+![Diagramm, das ein virtuelles Netzwerk mit einer Firewall und einer Routingtabelle zeigt](../Media/task-3.png)
+
+
   
 ## Übungsanweisungen
 
@@ -44,7 +46,7 @@ Die Azure Firewallrichtlinie ist eine Ressource der obersten Ebene, die Sicherhe
     | Name          | **AzureFirewallSubnet** |
     | Adressbereich | **10.1.63.0/24**        |
 
-    > **Hinweis**: Belassen Sie alle anderen Einstellungen unverändert.
+**Hinweis**: Belassen Sie alle anderen Einstellungen unverändert.
 
 ### Erstellen einer Azure Firewall-Instanz
 
@@ -75,79 +77,71 @@ Die Azure Firewallrichtlinie ist eine Ressource der obersten Ebene, die Sicherhe
 
 ### Aktualisieren der Firewallrichtlinie
 
-1. Geben Sie in das Suchfeld am oberen Rand des Portals **Firewallrichtlinie** ein. Wählen Sie in den Suchergebnissen **Firewallrichtlinien** aus.
+1. Suchen Sie im Portal die Option `Firewall Policies`, und wählen Sie sie aus. 
 
 1. Wählen Sie **fw-policy** aus.
 
-1. Wählen Sie **Anwendungsregeln** aus.
+### Hinzufügen einer Anwendungsregel
 
-1. Wählen Sie **+ Regelsammlung hinzufügen** aus.
+1. Wählen Sie im Blatt **Einstellungen** die Option **Anwendungsregeln** und dann **Regelsammlung hinzufügen** aus.
 
-1. Verwenden Sie die Werte in der folgenden Tabelle. Verwenden Sie für jede Eigenschaft, die nicht angegeben ist, den Standardwert.
+1. Konfigurieren Sie die Sammlung von Anwendungsregeln und wählen Sie dann **Hinzufügen**. 
 
     | Eigenschaft               | Wert                                     |
     | :--------------------- | :---------------------------------------- |
-    | Name                   | **app-vnet-fw-rule-collection**           |
+    | Name                   | `app-vnet-fw-rule-collection`         |
     | Regelsammlungstyp   | **Anwendung**                           |
-    | Priorität               | **200**                                   |
+    | Priorität               | `200`                                   |
     | Regelsammlungsaktion | **Zulassen**                                 |
     | Regelsammlungsgruppe  | **DefaultApplicationRuleCollectionGroup** |
+    | Name             | `AllowAzurePipelines`                |
+    | Quellentyp      | **IP-Adresse**                         |
+    | Quelle           | `10.1.0.0/23`                       |
+    | Protocol         | `https`                             |
+    | Zieltyp | **FQDN**                                  |
+    | Destination      | `dev.azure.com, azure.microsoft.com` |
 
-    1. Verwenden Sie unter **Regeln** die Werte aus der folgenden Tabelle.
+**Hinweis**: Die Regel **AllowAzurePipelines** ermöglicht der Webanwendung den Zugriff auf Azure Pipelines. Die Regel ermöglicht der Webanwendung den Zugriff auf den Azure DevOps-Dienst und die Azure-Website.
 
-        | Eigenschaft         | Wert                                  |
-        | :--------------- | :------------------------------------- |
-        | Name             | **AllowAzurePipelines**                |
-        | Quellentyp      | **IP-Adresse**                         |
-        | Quelle           | **10.1.0.0/23**                        |
-        | Protokoll         | **https**                              |
-        | Zieltyp | FQDN                                   |
-        | Ziel      | **dev.azure.com, azure.microsoft.com** |
+### Hinzufügen einer Netzwerkregel
 
-        und wählen Sie **Hinzufügen** aus.
+1. Wählen Sie im Blatt **Einstellungen** die Option **Netzwerkregeln** und dann **Eine Netzwerksammlung hinzufügen**.
 
-> **Hinweis**: Die Regel **AllowAzurePipelines** ermöglicht der Webanwendung den Zugriff auf Azure Pipelines. Die Regel ermöglicht der Webanwendung den Zugriff auf den Azure DevOps-Dienst und die Azure-Website.
-
-1. Erstellen Sie eine **Netzwerkregelsammlung**, die eine einzelne IP-Adressregel enthält, indem Sie die Werte in der folgenden Tabelle verwenden. Verwenden Sie für jede Eigenschaft, die nicht angegeben ist, den Standardwert.
-
-1. Wählen Sie **Netzwerkregeln** aus.
-
-1. Wählen Sie unter **+ Netzwerkregelsammlung** aus.
-
-1. Verwenden Sie die Werte in der folgenden Tabelle. Verwenden Sie für jede Eigenschaft, die nicht angegeben ist, den Standardwert.
+1. Konfigurieren Sie die Netzwerkregel und wählen Sie dann **Hinzufügen**.  
 
     | Eigenschaft               | Wert                                 |
     | :--------------------- | :------------------------------------ |
-    | Name                   | **app-vnet-fw-nrc-dns**               |
+    | Name                   | `app-vnet-fw-nrc-dns`               |
     | Regelsammlungstyp   | **Netzwerk**                           |
-    | Priorität               | **200**                               |
+    | Priorität               | `200`                        |
     | Regelsammlungsaktion | **Zulassen**                             |
     | Regelsammlungsgruppe  | **DefaultNetworkRuleCollectionGroup** |
+    | Regel                  | **AllowDns**         |
+    | Quelle                | `10.1.0.0/23`      |
+    | Protokoll              | **UDP**              |
+    | Zielports     | `53`               |
+    | Zieladressen | **1.1.1.1, 1.0.0.1** |
 
-    1. Verwenden Sie unter **Regeln** die Werte aus der folgenden Tabelle.
+### Überprüfen des Status der Firewall- und Firewallrichtlinie
 
-        | Eigenschaft              | Wert                |
-        | :-------------------- | :------------------- |
-        | Regel                  | **AllowDns**         |
-        | Quelle                | **10.1.0.0/23**      |
-        | Protokoll              | **UDP**              |
-        | Zielports     | **53**               |
-        | Zieladressen | **1.1.1.1, 1.0.0.1** |
+1. Suchen Sie im Portal nach **Firewall** und wählen Sie es aus. 
 
-        und wählen Sie **Hinzufügen** aus.
+1. Sehen Sie sich die **App-vnet-firewall** an und stellen Sie sicher, dass der **Bereitstellungsstatus** **Erfolgreich** ist. Dies kann einige Minuten dauern. 
 
-    Erfahren Sie mehr über das [Erstellen einer Anwendungsregel](https://docs.microsoft.com/azure/firewall/tutorial-firewall-deploy-portal#configure-an-application-rule) und [Erstellen einer Netzwerkregel](https://docs.microsoft.com/azure/firewall/tutorial-firewall-deploy-portal#configure-a-network-rule).
+1. Suchen Sie im Portal nach und wählen Sie **Firewallrichtlinien**.
 
-1. Um zu überprüfen, ob der Bereitstellungsstatus der Azure Firewall und der Firewallrichtlinie **erfolgreich** war, führen Sie Folgendes aus.
+1. Sehen Sie sich die **fw-policy** an und stellen Sie sicher, dass der **Bereitstellungsstatus** **Erfolgreich** ist. Dies kann einige Minuten dauern.
 
-1. Geben Sie in das Suchfeld am oberen Rand des Portals **Firewall** ein. Wählen Sie **Firewall** in den Suchergebnissen aus.
+### Erfahren Sie mehr in Onlineschulungen
 
-1. Wählen Sie **app-vnet-firewall** aus.
++ [Einführung in Azure Firewall](https://learn.microsoft.com/training/modules/introduction-azure-firewall/). In diesem Modul erfahren Sie, wie Azure Firewall-Funktionen, -Regeln, -Bereitstellungsoptionen und -Verwaltung funktionieren.
++ [Einführung in Azure Firewall Manager](https://learn.microsoft.com/training/modules/intro-to-azure-firewall-manager/). In diesem Modul erfahren Sie, wie Azure Firewall Manager eine zentrale Verwaltung von Sicherheitsrichtlinien und Routen für cloudbasierte Sicherheitsperimeter bereitstellt.
 
-1- Überprüfen Sie, ob der **Bereitstellungsstatus** **Erfolgreich** lautet.
+### Wichtige Erkenntnisse
 
-1- Geben Sie in das Suchfeld am oberen Rand des Portals **Firewall** ein. Wählen Sie in den Suchergebnissen **Firewallrichtlinien** aus.
+Herzlichen Glückwunsch zum Abschluss der Übung. Hier sind die wichtigsten Erkenntnisse:
 
-1. Wählen Sie **fw-policy** aus.
-
-1- Überprüfen Sie, ob der **Bereitstellungsstatus** **Erfolgreich** lautet.
++ Azure Firewall ist ein cloudbasierter Sicherheitsdienst, der Ihre virtuellen Azure-Netzwerkressourcen vor eingehenden und ausgehenden Bedrohungen schützt.
++ Eine Azure- Firewallrichtlinie ist eine Ressource, die eine oder mehrere Sammlungen von NAT-, Netzwerk- und Anwendungsregeln enthält.
++ Netzwerkregeln erlauben oder verweigern Datenverkehr auf der Grundlage von IP-Adressen, Ports und Protokollen.
++ Anwendungsregeln erlauben oder verweigern Datenverkehr auf der Grundlage von voll qualifizierten Domänennamen (FQDNs), URLs und HTTP/HTTPS-Protokollen.
