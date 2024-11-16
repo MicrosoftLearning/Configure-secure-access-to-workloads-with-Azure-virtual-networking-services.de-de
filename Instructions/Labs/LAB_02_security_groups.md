@@ -1,31 +1,59 @@
 ---
 lab:
-  title: 'Übung: Steuern des ein- und ausgehenden Netzwerkdatenverkehrs der Webanwendung'
+  title: 'Übung 02: Erstellen und Konfigurieren von Netzwerksicherheitsgruppen'
   module: Guided Project - Configure secure access to workloads with Azure virtual networking services
 ---
 
-# Lab: Steuern des ein- und ausgehenden Netzwerkdatenverkehrs der Webanwendung
+# Übung 02: Erstellen und Konfigurieren von Netzwerksicherheitsgruppen
 
 ## Szenario
 
-Ihre Organisation benötigt die Steuerung des ein- und ausgehenden Netzwerkdatenverkehrs der Webanwendung. Um die Sicherheit der Webanwendung weiter zu erhöhen, können Netzwerksicherheitsgruppen (NSG) und Anwendungssicherheitsgruppen (ASG) konfiguriert werden. NSG ist eine Sicherheitsebene, die ein- und ausgehenden Netzwerkdatenverkehr von Azure-Ressourcen filtert, während ASG die Gruppierung von Ressourcen zur gemeinsamen Verwaltung ermöglicht. Diese Sicherheitsgruppen bieten eine differenzierte Steuerung des ein- und ausgehenden Netzwerkdatenverkehrs der Webanwendungskomponenten.
+Ihre Organisation erfordert eine strenge Kontrolle des Netzwerkverkehrs im App-vnet. Sie ermitteln diese Anforderungen.
++ Das Frontend-Subnetz verfügt über Webserver, auf die vom Internet aus zugegriffen werden kann. Für diese Server ist eine **Anwendungssicherheitsgruppe** (ASG) erforderlich. Der ASG sollte jeder Schnittstelle des virtueller Computers zugeordnet werden, die Teil der Gruppe ist. Dadurch können die Webserver einfach verwaltet werden. 
++ Eine **NSG-Regel** ist erforderlich, um eingehenden HTTPS-Datenverkehr zum ASG zuzulassen. Diese Regel verwendet das TCP-Protokoll auf Port 443. 
++ Im Backend-Subnetz befinden sich Datenbankserver, die von den Frontend-Webservern verwendet werden. Eine **Netzwerksicherheitsgruppe** (NSG) ist erforderlich, um diesen Verkehr zu kontrollieren. Die NSG sollte jeder VM-Schnittstelle zugeordnet werden, auf die von den Webservern zugegriffen wird. 
++ Eine **NSG-Regel** ist erforderlich, um eingehenden Netzwerkverkehr vom ASG zu den Backend-Servern zuzulassen.  Diese Regel verwendet den MS SQL-Dienst und Port 1443. 
++ Zum Testen sollte ein virtueller Computer im Frontend-Subnetz (VM1) und im Backend-Subnetz (VM2) installiert werden.  Die IT-Gruppe hat eine Azure Resource Manager-Vorlage vorbereitet, um diese **Ubuntu-Server** bereitzustellen. 
 
-### Architekturdiagramm
+## Qualifikationsaufgabe
+
++ Erstellen Sie eine Netzwerksicherheitsgruppe.
++ Erstellen von Regeln für Netzwerksicherheitsgruppen.
++ Zuordnen einer Netzwerksicherheitsgruppe zu einem Subnetz.
++ Erstellen und Verwenden von Anwendungssicherheitsgruppen in Netzwerksicherheitsgruppenregeln.
+
+## Architekturdiagramm
 
 ![Diagramm, das eine ASG und eine NSG zeigt, die mit einem virtuellen Netzwerk verbunden sind](../Media/task-2.png)
 
-### Qualifikationsaufgaben
 
-- Erstellen einer NSG.
-- Erstellen von NSG-Regeln.
-- Zuordnen einer NSG zu einem Subnetz.
-- Erstellen und Verwenden von Anwendungssicherheitsgruppen in NSG-Regeln.
+
 
 ## Übungsanweisungen
 
+### Erstellen der Netzwerkinfrastruktur für die Übung
+
+**Hinweis:** Für diese Übung ist es erforderlich, dass die virtuellen Netzwerke und Subnetze von Lab 01 installiert sind. Eine [Vorlage](https://github.com/MicrosoftLearning/Configure-secure-access-to-workloads-with-Azure-virtual-networking-services/blob/main/Allfiles/Labs/All-Labs/create-vnet-subnets-template.json) wird zur Verfügung gestellt, wenn Sie diese Ressourcen bereitstellen müssen.
+
+1. Verwenden Sie das Symbol (oben rechts), um eine **Cloud Shell**-Sitzung zu starten. Navigieren Sie alternativ direkt zu `https://shell.azure.com`.
+
+1. Wenn Sie aufgefordert werden, entweder **Bash** oder **PowerShell** auszuwählen, wählen Sie **PowerShell** aus.
+
+1. Für diese Aufgabe ist kein Speicherplatz erforderlich Wählen Sie Ihr Abonnement aus. 
+
+1. Stellen Sie die für diese Übung erforderlichen virtuellen Computer bereit. 
+
+   ```powershell
+   $RGName = "RG1"
+   
+   New-AzResourceGroupDeployment -ResourceGroupName $RGName -TemplateUri https://raw.githubusercontent.com/MicrosoftLearning/Configure-secure-access-to-workloads-with-Azure-virtual-networking-services/main/Instructions/Labs/azuredeploy.json
+   ```
+  
+1. Suchen Sie im Portal die Option `virtual machines`, und wählen Sie sie aus. Überprüfen Sie, ob sowohl vm1 als auch vm2 **Laufen** sind.
+
 ### Erstellen von Anwendungssicherheitsgruppen
 
-Mithilfe einer Anwendungssicherheitsgruppe (ASG) können Sie Server mit ähnlichen Funktionen gruppieren (z. B. Webserver).
+[Anwendungssicherheitsgruppen (ASGs)](https://learn.microsoft.com/azure/virtual-network/application-security-groups) ermöglichen die Gruppierung von Servern mit ähnlichen Funktionalitäten. Zum Beispiel alle Webserver, die Ihre Anwendung hosten. 
 
 1. Suchen Sie im Portal die Option `Application security groups`, und wählen Sie sie aus.
    
@@ -40,13 +68,19 @@ Mithilfe einer Anwendungssicherheitsgruppe (ASG) können Sie Server mit ähnlich
 
 1. Wählen Sie **Überprüfen + erstellen** und anschließend **Erstellen** aus.
 
-[Erfahren Sie mehr über das Erstellen einer Anwendungssicherheitsgruppe](https://docs.microsoft.com/azure/virtual-network/tutorial-filter-network-traffic#create-application-security-groups).
+**Hinweis**: Sie erstellen die Anwendungssicherheitsgruppe in derselben Region, in der sich auch das vorhandene virtuelle Netzwerk befindet.
 
->**Hinweis**: Sie erstellen die Anwendungssicherheitsgruppe in derselben Region, in der sich auch das vorhandene virtuelle Netzwerk befindet.
+**Zuordnen der Anwendungssicherheitsgruppe zur Netzwerkschnittstelle der VM**
 
+1. Suchen Sie im Azure-Portal nach `VM2` und wählen Sie es aus.
+
+1. Wählen Sie im Blatt **Netzwerke** die Option **Anwendungssicherheitsgruppen** und anschließend die Option **Anwendungssicherheitsgruppen hinzufügen** aus.
+
+1. Wählen Sie die **App-backend-asg** und wählen Sie dann **Hinzufügen**.
+   
 ### Erstellen uns Zuordnen der Netzwerksicherheitsgruppe
 
-Eine Netzwerksicherheitsgruppe (NSG) schützt den Netzwerkdatenverkehr in Ihrem virtuellen Netzwerk. NSGs enthalten eine Liste mit Sicherheitsregeln, mit denen Netzwerkdatenverkehr für Ressourcen, die mit virtuellen Azure-Netzwerken (VNet) verbunden sind, zugelassen oder abgelehnt wird. NSGs können Subnetzen und/oder einzelnen Netzwerkschnittstellen zugeordnet werden, die mit virtuellen Computern (VM) verbunden sind.
+[Netzwerksicherheitsgruppen (NSGs)](https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview) sichern den Netzwerkverkehr in einem virtuellen Netzwerk. 
 
 1. Suchen Sie im Portal die Option `Network security group`, und wählen Sie sie aus.
 
@@ -59,11 +93,11 @@ Eine Netzwerksicherheitsgruppe (NSG) schützt den Netzwerkdatenverkehr in Ihrem 
     | Name           | `app-vnet-nsg`            |
     | Region         | **USA, Osten**                  |
 
-    [Erfahren Sie mehr über das Erstellen einer Netzwerksicherheitsgruppe](https://docs.microsoft.com/azure/virtual-network/tutorial-filter-network-traffic#create-a-network-security-group).
-
 1. Wählen Sie **Überprüfen + erstellen** und anschließend **Erstellen** aus.
 
-**Verknüpfen Sie die NSG mit dem App-VNet-Backend.**
+**Zuordnen des NSG zum App-vnet-Backend-Subnetz.**
+
+NSGs können Subnetzen und/oder einzelnen Netzwerkschnittstellen zugeordnet werden, die mit virtuellen Computern von Azure verbunden sind. 
 
 1. Wählen Sie **Zur Ressource gehen** oder navigieren Sie zur Ressource **app-vnet-nsg**.
 
@@ -73,21 +107,17 @@ Eine Netzwerksicherheitsgruppe (NSG) schützt den Netzwerkdatenverkehr in Ihrem 
 
 1. Wählen Sie **app-vnet (RG1)** und dann das **Backend**-Subnetz. Wählen Sie **OK** aus.
 
-    [Erfahren Sie mehr über das Zuordnen einer Netzwerksicherheitsgruppe zu einem Subnetz](https://docs.microsoft.com/azure/virtual-network/tutorial-filter-network-traffic#associate-a-network-security-group-to-a-subnet).
-
 ### Erstellen von Regeln für Netzwerksicherheitsgruppen
 
-Eine Netzwerksicherheitsgruppe (NSG) schützt den Netzwerkdatenverkehr in Ihrem virtuellen Netzwerk.
+Ein NSG verwendet [Sicherheitsregeln](https://learn.microsoft.com/azure/virtual-network/network-security-group-how-it-works), um ein- und ausgehenden Netzwerkverkehr zu filtern. 
 
-1. Geben Sie im Suchfeld oben im Portal **Netzwerksicherheitsgruppen** ein. Wählen Sie in den Suchergebnissen Netzwerksicherheitsgruppen aus.
+1. Geben Sie in das Suchfeld am oberen Rand des Portals **Netzwerksicherheitsgruppen** ein. Wählen Sie in den Suchergebnissen Netzwerksicherheitsgruppen aus.
 
 1. Wählen Sie in der Liste der Netzwerksicherheitsgruppen **app-vnet-nsg** aus.
 
-1. Wählen Sie im Abschnitt „Einstellungen“ von **app-vnet-nsg** die Option **Eingangssicherheitsregeln** aus.
+1. Wählen Sie im Blatt **Einstellungen** die Option **Eingehende Sicherheitsregeln**.
 
-1. Wählen Sie **+ Hinzufügen** aus.
-
-1. Geben Sie auf der Seite **Eingangssicherheitsregel hinzufügen** die Informationen aus der folgenden Tabelle ein:
+1. Wählen Sie **+ Hinzufügen** und konfigurieren Sie eine eingehende Sicherheitsregel. 
 
     | Eigenschaft                               | Value                          |
     | :------------------------------------- | :----------------------------- |
@@ -100,44 +130,21 @@ Eine Netzwerksicherheitsgruppe (NSG) schützt den Netzwerkdatenverkehr in Ihrem 
     | Priorität                               | **100**                        |
     | Name                                   | **AllowSSH**                   |
 
-    [Erfahren Sie mehr über das Erstellen einer Netzwerksicherheitsgruppen-Regel](https://docs.microsoft.com/azure/virtual-network/tutorial-filter-network-traffic#create-a-network-security-group).
 
-### Bereitstellen einer ARM-Vorlage mit Cloud Shell zum Erstellen der für diese Übung erforderlichen VMs
+### Erfahren Sie mehr in Onlineschulungen
 
-1. Öffnen Sie **Azure Cloud Shell** im Azure-Portal, indem Sie rechts oben im Azure-Portal das entsprechende Symbol auswählen.
++ [Filtern von Netzwerkdatenverkehr mithilfe einer Netzwerksicherheitsgruppe über das Azure-Portal](https://learn.microsoft.com/training/modules/filter-network-traffic-network-security-group-using-azure-portal/): In diesem Modul konzentrieren Sie sich auf die Filterung des Netzwerkverkehrs mithilfe von Netzwerksicherheitsgruppen (NSGs) im Azure-Portal. Erfahren Sie, wie Sie NSGs erstellen, konfigurieren und anwenden, um die Netzwerksicherheit zu verbessern.
++ [Schützen und Isolieren des Zugriffs auf Azure-Ressourcen mithilfe von Netzwerksicherheitsgruppen und Dienstendpunkten.](https://learn.microsoft.com/training/modules/secure-and-isolate-with-nsg-and-service-endpoints/) In diesem Modul erfahren Sie etwas über Netzwerksicherheitsgruppen und wie Sie die Netzwerkkonnektivität einschränken können. 
 
-1. Wenn Sie aufgefordert werden, entweder **Bash** oder **PowerShell** auszuwählen, wählen Sie **PowerShell** aus.
+### Wichtige Erkenntnisse
 
-    >**Hinweis**: Wenn Sie **Cloud Shell** zum ersten Mal starten und die Meldung **Für Sie wurde kein Speicher bereitgestellt** angezeigt wird, wählen Sie das in diesem Lab verwendete Abonnement aus, und wählen Sie dann **Speicher erstellen** aus.
+Herzlichen Glückwunsch zum Abschluss der Übung. Hier sind die wichtigsten Erkenntnisse:
 
-1. Stellen Sie die folgenden ARM-Vorlagen mit Cloud Shell bereit, um die für diese Übung erforderlichen VMs zu erstellen:
++ Mit Anwendungssicherheitsgruppen können Sie virtuelle Computer organisieren und Richtlinien für die Netzwerksicherheit auf der Grundlage der Anwendungen Ihres Unternehmens definieren.
++ Eine Azure-Netzwerksicherheitsgruppe wird zur Filterung des Netzwerkverkehrs zwischen Azure-Ressourcen in einem virtuellen Azure-Netzwerk verwendet.
++ Sie können jedem Subnetz eines virtuellen Netzwerks und jeder Netzwerkschnittstelle eines virtuellen Computers keine oder eine Netzwerksicherheitsgruppe zuordnen. 
++ Eine Netzwerksicherheitsgruppe enthält Sicherheitsregeln, die eingehenden Netzwerkverkehr zu oder ausgehenden Netzwerkverkehr von Azure-Ressourcen zulassen oder verweigern.
++ Sie verbinden virtuelle Computer mit einer Anwendungssicherheitsgruppe. Anschließend verwenden Sie die Anwendungssicherheitsgruppe als Quelle oder Ziel in den Regeln für Netzwerksicherheitsgruppen.
 
->**Hinweis**: Sie können den Text im folgenden Abschnitt auswählen und ihn in die Cloud Shell kopieren/einfügen.
 
-   ```powershell
-   $RGName = "RG1"
-   
-   New-AzResourceGroupDeployment -ResourceGroupName $RGName -TemplateUri https://raw.githubusercontent.com/MicrosoftLearning/Configure-secure-access-to-workloads-with-Azure-virtual-networking-services/main/Instructions/Labs/azuredeploy.json
-   ```
-  
-1. Um zu überprüfen, ob die virtuellen Computer **VM1** und **VM2** ausgeführt werden, navigieren Sie zur Ressourcengruppe **RG1**, und wählen Sie **VM1** aus.
 
-1. Überprüfen Sie, ob der Status des virtuellen Computers **Ausgeführt** lautet.
-
-1. Wiederholen Sie den vorherigen Schritt für **VM2**.
-
-### Zuordnen der Anwendungssicherheitsgruppe zur Netzwerkschnittstelle der VM
-
-Als Sie die VMs erstellt haben, hat Azure eine Netzwerkschnittstelle für jede VM erstellt und an die VM angefügt.
-
-Fügen Sie die Netzwerkschnittstelle von VM2 die Anwendungssicherheitsgruppe hinzu, die Sie zuvor erstellt haben.
-
-1. Navigieren Sie im Azure-Portal zu Ihrer Ressourcengruppe **RG1**, und wählen Sie **VM2** aus.
-
-1. Navigieren Sie zur Registerkarte „Netzwerk“ der VM, und wählen Sie **+ Anwendungssicherheitsgruppen hinzufügen** im Abschnitt **Anwendungssicherheitsgruppen** aus.
-
-1. Wählen Sie **app-backend-asg** in der Liste der Anwendungssicherheitsgruppen aus.
-
-1. Wählen Sie **Hinzufügen** aus.
-
-  [Erfahren Sie mehr über das Hinzufügen einer NIC zu einer Anwendungssicherheitsgruppe](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-network-interface?tabs=azure-portal#add-or-remove-from-application-security-groups).
