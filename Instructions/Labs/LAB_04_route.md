@@ -8,9 +8,9 @@ lab:
 
 ## Szenario
 
-Um das Erzwingen der Richtlinien der Firewall zu gewährleisten, muss der abgehende Anwendungsverkehr durch die Firewall geleitet werden. Sie ermitteln diese Anforderungen. 
-+ Es ist eine Routentabelle erforderlich. Diese Routentabelle wird den Frontend- und Back-End-Subnetzen zugeordnet.  
-+ Eine Route ist erforderlich, um den gesamten ausgehenden IP-Verkehr von den Subnetzen zur Firewall zu filtern. Es wird die private IP-Adresse der Firewall verwendet. 
+Um sicherzustellen, dass die Firewallrichtlinien erzwungen werden, muss ausgehender Anwendungsdatenverkehr über die Firewall geleitet werden. Sie identifizieren diese Anforderungen. 
++ Es ist eine Routentabelle erforderlich. Diese Routingtabelle wird den Frontend- und Back-End-Subnetzen zugeordnet.  
++ Ein Arbeitsplan ist erforderlich, um den gesamten ausgehenden IP-Datenverkehr von den Subnetzen zur Firewall zu filtern. Es wird die private IP-Adresse der Firewall verwendet. 
 
 ## Qualifikationsaufgaben
 

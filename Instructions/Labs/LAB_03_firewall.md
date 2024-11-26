@@ -8,10 +8,10 @@ lab:
 
 ## Szenario
 
-Ihr Unternehmen erfordert eine zentralisierte Netzwerksicherheit für das virtuelle Anwendungsnetzwerk. Mit zunehmender Nutzung der Anwendungen werden eine detailliertere Filterung auf Anwendungsebene und ein erweiterter Schutz vor Bedrohungen erforderlich sein. Außerdem ist zu erwarten, dass die Anwendung kontinuierliche Updates von Azure DevOps-Pipelines benötigt. Sie ermitteln diese Anforderungen.
+Ihr Unternehmen erfordert eine zentralisierte Netzwerksicherheit für das virtuelle Anwendungsnetzwerk. Da sich die Anwendungsauslastung erhöht, werden präzisere Filterung auf Anwendungsebene und erweiterter Bedrohungsschutz benötigt. Außerdem ist zu erwarten, dass die Anwendung kontinuierliche Updates von Azure DevOps-Pipelines benötigt. Sie ermitteln diese Anforderungen.
 + Azure Firewall ist für zusätzliche Sicherheit im App-vnet erforderlich. 
 + Eine **Firewall-Richtlinie** sollte konfiguriert werden, um den Zugriff auf die Anwendung zu verwalten. 
-+ Eine Firewall-Richtlinie **Anwendungsregel** ist erforderlich. Diese Regel ermöglicht der Anwendung den Zugriff auf Azure DevOps, damit der Anwendungscode aktualisiert werden kann. 
++ Eine Firewall-Richtlinie **Anwendungsregel** ist erforderlich. Diese Regel ermöglicht den Anwendungszugriff auf Azure DevOps, sodass der Anwendungscode aktualisiert werden kann. 
 + Eine Firewall-Richtlinie **Netzwerkregel** ist erforderlich. Diese Regel ermöglicht die DNS-Auflösung. 
 
 ### Qualifikationsaufgaben

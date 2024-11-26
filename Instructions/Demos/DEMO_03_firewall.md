@@ -25,13 +25,13 @@ Hierbei handelt es sich um die Anwendungsregel, die ausgehenden Zugriff auf [www
 1.  Navigieren Sie zu der von Ihnen erstellten Firewallrichtlinie.
 2.  Wählen Sie „Anwendungsregeln“ aus.
 3.  Wählen Sie „Regelsammlung hinzufügen“ aus.
-4.  Geben Sie unter „Name“ den Wert „App-Coll01“ ein.
-5.  Geben Sie unter „Priorität“ den Wert 200 ein.
+4.  Geben Sie unter Name den Wert App-Coll01 ein.
+5.  Geben Sie unter Priorität den Wert 200 ein.
 6.  Wählen Sie unter „Regelsammlungsaktion“ die Option „Zulassen“ aus.
-7.  Geben Sie unter „Regeln“ für „Name“ den Wert „Allow-Google“ ein.
+7.  Geben Sie unter Regeln für Name den Wert Allow-Google ein.
 8.  Wählen Sie unter „Quelltyp“ die Option „IP-Adresse“ aus.
-9.  Geben Sie unter „Quelle“ den Wert 10.0.2.0/24 ein.
-10. Geben Sie unter „Protokoll:Port“ den Eintrag „http, https“ ein.
+9.  Geben Sie unter Quelle den Wert 10.0.2.0/24 ein.
+10. Geben Sie unter Protocol:port den Wert http, https ein.
 11. Wählen Sie unter „Zieltyp“ die Option „FQDN“ aus.
 12. Geben Sie für „Ziel“ den Wert „www.google.com“ ein.
 13. Wählen Sie „Hinzufügen“ aus.
@@ -42,17 +42,19 @@ Azure Firewall enthält eine integrierte Regelsammlung für Infrastruktur-FQDNs,
 Hierbei handelt es sich um die Netzwerkregel, die ausgehenden Zugriff auf zwei IP-Adressen am Port 53 (DNS) zulässt.
 1.  Wählen Sie „Netzwerkregeln“ aus.
 2.  Wählen Sie „Regelsammlung hinzufügen“ aus.
-3.  Geben Sie unter „Name“ den Wert „Net-Coll01“ ein.
-4.  Geben Sie unter „Priorität“ den Wert 200 ein.
+3.  Geben Sie unter Name den Wert Net-Coll01 ein.
+4.  Geben Sie unter Priorität den Wert 200 ein.
 5.  Wählen Sie unter „Regelsammlungsaktion“ die Option „Zulassen“ aus.
 6.  Wählen Sie für „Regelsammlungsgruppe“ die Option „DefaultNetworkRuleCollectionGroup“ aus.
-7.  Geben Sie unter „Regeln“ für „Name“ den Wert „Allow-DNS“ ein.
+7.  Geben Sie unter Regeln für Name den Wert Allow-DNS ein.
 8.  Wählen Sie unter „Quelltyp“ die Option „IP-Adresse“ aus.
-9.  Geben Sie unter „Quelle“ den Wert 10.0.2.0/24 ein.
+9.  Geben Sie unter Quelle den Wert 10.0.2.0/24 ein.
 10. Wählen Sie für „Protokoll“ die Option „UDP“ aus.
-11. Geben Sie unter „Zielports“ den Wert 53 ein.
+11. Geben Sie unter Zielports den Wert 53 ein.
 12. Wählen Sie unter „Zieltyp“ die Option „IP-Adresse“ aus.
-13. Geben Sie unter „Ziel“ den Wert 209.244.0.3, 209.244.0.4 ein.
+
+>**Hinweis**: Die Kursteilnehmer sollten jetzt in der Lage sein, LAB_04 abzuschließen.
+14. Geben Sie unter „Ziel“ den Wert 209.244.0.3, 209.244.0.4 ein.
 Dies sind öffentliche DNS-Server, die von CenturyLink betrieben werden.
-14. Wählen Sie „Hinzufügen“ aus.
+15. Wählen Sie „Hinzufügen“ aus.
 

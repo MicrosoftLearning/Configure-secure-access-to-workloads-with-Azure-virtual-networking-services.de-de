@@ -39,28 +39,11 @@ Eine Routingtabelle kann keinem oder mehreren Subnetzen zugeordnet werden. Routi
 
 1.  Navigieren Sie zu dem Subnetz, das Sie der Routingtabelle zuordnen möchten.
 
-1.  Wählen Sie **Routingtabelle* aus, und wählen Sie Ihre neue Routingtabelle aus. 
+1.  Wählen Sie **Routingtabelle** aus, und wählen Sie Ihre neue Routingtabelle aus. 
 
 1.  **Speichern** Sie Ihre Änderungen.
 
  
 >**Hinweis**: Sie können eine Routingtabelle nur Subnetzen in virtuellen Netzwerken zuordnen, die an demselben Azure-Speicherort und unter demselben Abonnement wie die Routingtabelle vorhanden sind.
-
-### Testen der Firewall
-Testen Sie nun die Firewall, um zu bestätigen, dass Routing- und Firewallrichtlinien erwartungsgemäß funktionieren. 
-
-1.  Stellen Sie eine Remotedesktopverbindung mit der öffentlichen IP-Adresse der Firewall her, und melden Sie sich beim virtuellen Computer Srv-Work an.
-2.  Navigieren Sie in Internet Explorer zu https://www.google.com.
-3.  Wählen Sie in den Sicherheitswarnungen von Internet Explorer „OK > Schließen“ aus. Die Google-Homepage sollte nun angezeigt werden.
-4.  Navigieren Sie zu https://www.microsoft.com. Sie sollten durch die Firewall blockiert werden.
-
-Damit haben Sie sich vergewissert, dass die Firewallregeln funktionieren:
-- Sie können zum einzigen zulässigen FQDN navigieren, aber nicht zu anderen.
-- Sie können DNS-Namen mithilfe des konfigurierten externen DNS-Servers auflösen.
- 
->**Hinweis**: Die Kursteilnehmer sollten jetzt in der Lage sein, LAB_03 abzuschließen.
-
-
-
 
 >**Hinweis**: Die Kursteilnehmer sollten jetzt in der Lage sein, LAB_04 abzuschließen.

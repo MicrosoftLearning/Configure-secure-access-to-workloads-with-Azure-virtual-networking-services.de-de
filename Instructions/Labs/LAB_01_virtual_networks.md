@@ -8,12 +8,12 @@ lab:
 
 ## Szenario
 
-Ihre Organisation migriert eine webbasierte Anwendung zu Azure. Ihre erste Aufgabe besteht darin, die virtuellen Netzwerke und Subnetze zu platzieren. Außerdem müssen die virtuellen Netzwerke sicher gepeert werden. Sie ermitteln diese Anforderungen. 
+Ihre Organisation migriert eine webbasierte Anwendung zu Azure. Ihre erste Aufgabe besteht darin, die virtuellen Netzwerke und Subnetze einzurichten. Außerdem müssen Sie ein sicheres Peering für die virtuellen Netzwerke einrichten. Sie identifizieren diese Anforderungen. 
 + Zwei virtuelle Netzwerke sind erforderlich, **app-vnet** und **hub-vnet**. Dies simuliert eine Hub-and-Spoke-Netzwerkarchitektur. 
-+ Das app-vnet wird die Anwendung hosten. Für dieses virtuelle Netzwerk sind zwei Subnetze erforderlich. Das **Frontend-Subnetz** wird die Webserver hosten. Das **Backend-Subnetz** wird die Datenbankserver hosten.
++ Das app-vnet wird die Anwendung hosten. Dieses virtuelle Netzwerk umfasst zwei Subnetze. Das **Frontend-Subnetz** wird die Webserver hosten. Das **Backend-Subnetz** wird die Datenbankserver hosten.
 + Das hub-vnet erfordert nur ein Subnetz für die Firewall. 
 + Die beiden virtuellen Netzwerke müssen in der Lage sein, über **virtuelles Netzwerk Peering** sicher und privat miteinander zu kommunizieren. 
-+ Beide virtuellen Netze sollten sich in derselben Region befinden. 
++ Beide virtuellen Netzwerke müssen sich in derselben Region befinden. 
 
 ## Qualifikationsaufgabe
 
