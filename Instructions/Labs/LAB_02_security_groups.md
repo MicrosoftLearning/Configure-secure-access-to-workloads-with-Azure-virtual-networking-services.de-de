@@ -8,10 +8,10 @@ lab:
 
 ## Szenario
 
-Ihre Organisation erfordert eine strenge Kontrolle des Netzwerkverkehrs im App-vnet. Sie ermitteln diese Anforderungen.
-+ Das Frontend-Subnetz verfügt über Webserver, auf die vom Internet aus zugegriffen werden kann. Für diese Server ist eine **Anwendungssicherheitsgruppe** (ASG) erforderlich. Der ASG sollte jeder Schnittstelle des virtueller Computers zugeordnet werden, die Teil der Gruppe ist. Dadurch können die Webserver einfach verwaltet werden. 
-+ Eine **NSG-Regel** ist erforderlich, um eingehenden HTTPS-Datenverkehr zum ASG zuzulassen. Diese Regel verwendet das TCP-Protokoll auf Port 443. 
-+ Im Backend-Subnetz befinden sich Datenbankserver, die von den Frontend-Webservern verwendet werden. Eine **Netzwerksicherheitsgruppe** (NSG) ist erforderlich, um diesen Verkehr zu kontrollieren. Die NSG sollte jeder VM-Schnittstelle zugeordnet werden, auf die von den Webservern zugegriffen wird. 
+Ihre Organisation erfordert, dass der Netzwerkdatenverkehr in app-vnet streng kontrolliert wird. Sie identifizieren diese Anforderungen.
++ Das Front-End-Subnetz enthält Webserver, auf die über das Internet zugegriffen werden kann. Für diese Server ist eine **Anwendungssicherheitsgruppe** (ASG) erforderlich. Der ASG sollte jeder Schnittstelle des virtueller Computers zugeordnet werden, die Teil der Gruppe ist. Dadurch können die Webserver einfach verwaltet werden. 
++ Eine **NSG-Regel** ist erforderlich, um eingehenden HTTPS-Datenverkehr zum ASG zuzulassen. Diese Regel verwendet das TCP-Protokoll am Port 443. 
++ Das Back-End-Subnetz enthält Datenbankserver, die von den Front-End-Webservern verwendet werden. Eine **Netzwerksicherheitsgruppe** (NSG) ist erforderlich, um diesen Verkehr zu kontrollieren. Die NSG sollte jeder VM-Schnittstelle zugeordnet werden, auf die von den Webservern zugegriffen wird. 
 + Eine **NSG-Regel** ist erforderlich, um eingehenden Netzwerkverkehr vom ASG zu den Backend-Servern zuzulassen.  Diese Regel verwendet den MS SQL-Dienst und Port 1443. 
 + Zum Testen sollte ein virtueller Computer im Frontend-Subnetz (VM1) und im Backend-Subnetz (VM2) installiert werden.  Die IT-Gruppe hat eine Azure Resource Manager-Vorlage vorbereitet, um diese **Ubuntu-Server** bereitzustellen. 
 

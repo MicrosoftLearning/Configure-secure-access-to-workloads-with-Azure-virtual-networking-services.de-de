@@ -8,7 +8,7 @@ lab:
 
 ## Szenario
 
-Ihr Unternehmen erfordert, dass Workloads Domänennamen anstelle von IP-Adressen für die interne Kommunikation verwenden.  Das Unternehmen möchte keine eigene DNS-Lösung hinzufügen. Sie ermitteln diese Anforderungen.
+Ihr Unternehmen erfordert, dass Workloads Domänennamen anstelle von IP-Adressen für die interne Kommunikation verwenden.  Die Organisation möchte keine benutzerdefinierte DNS-Lösung hinzufügen. Sie identifizieren diese Anforderungen.
 + Eine **private DNS-Zone** ist für contoso.com erforderlich.
 + Der DNS wird einen **virtuellen Netzwerk Link** zu app-vnet verknüpfen. 
 + Für das Backend-Subnetz ist ein neuer **DNS-Eintrag** erforderlich. 
