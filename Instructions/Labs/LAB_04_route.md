@@ -71,7 +71,7 @@ Azure erstellt automatisch eine [Routentabelle](https://learn.microsoft.com/azur
     | Eigenschaft        | Wert              |
     | :-------------- | :----------------- |
     | Virtuelles Netzwerk | **app-vnet** (RG1) |
-    | Subnetz          | **frontend**       |
+    | Subnet          | **backend**       |
 
 ### Erstellen einer Route in einer Routingtabelle
 

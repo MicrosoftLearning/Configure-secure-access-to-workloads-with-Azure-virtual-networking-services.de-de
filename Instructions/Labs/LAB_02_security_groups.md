@@ -41,7 +41,9 @@ Ihre Organisation erfordert, dass der Netzwerkdatenverkehr in app-vnet streng ko
 
 1. Für diese Aufgabe ist kein Speicherplatz erforderlich Wählen Sie Ihr Abonnement aus. 
 
-1. Stellen Sie die für diese Übung erforderlichen virtuellen Computer bereit. 
+1. Stellen Sie die für diese Übung erforderlichen virtuellen Computer bereit.
+
+>**Hinweis**: Wenn die Bereitstellung aufgrund von Kapazitätsbeschränkungen fehlschlägt, bearbeiten Sie die Vorlage und ändern Sie den Wert „Standort“. 
 
    ```powershell
    $RGName = "RG1"
@@ -63,7 +65,7 @@ Ihre Organisation erfordert, dass der Netzwerkdatenverkehr in app-vnet streng ko
     | :------------- | :--------------------------- |
     | Abonnement   | **Wählen Sie Ihr Abonnement aus** |
     | Ressourcengruppe | **RG1**                      |
-    | Name           | `app-backend-asg`          |
+    | Name           | `app-frontend-asg`          |
     | Region         | **USA, Osten**                  |
 
 1. Wählen Sie **Überprüfen + erstellen** und anschließend **Erstellen** aus.
@@ -76,7 +78,7 @@ Ihre Organisation erfordert, dass der Netzwerkdatenverkehr in app-vnet streng ko
 
 1. Wählen Sie im Blatt **Netzwerke** die Option **Anwendungssicherheitsgruppen** und anschließend die Option **Anwendungssicherheitsgruppen hinzufügen** aus.
 
-1. Wählen Sie die **App-backend-asg** und wählen Sie dann **Hinzufügen**.
+1. Markieren Sie die **app-frontend-asg** und wählen Sie dann **Hinzufügen**.
    
 ### Erstellen uns Zuordnen der Netzwerksicherheitsgruppe
 
@@ -105,7 +107,7 @@ NSGs können Subnetzen und/oder einzelnen Netzwerkschnittstellen zugeordnet werd
 
 1. Wählen Sie **+ Zuordnen** aus.
 
-1. Wählen Sie **app-vnet (RG1)** und dann das **Backend**-Subnetz. Wählen Sie **OK** aus.
+1. Wählen Sie **app-vnet (RG1)** und dann das **Backend**-Subnetz. Klicken Sie auf **OK**.
 
 ### Erstellen von Regeln für Netzwerksicherheitsgruppen
 
