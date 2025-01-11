@@ -1,49 +1,50 @@
 ---
 demo:
-  title: 'Demonstration: Erstellen und Konfigurieren des Netzwerkroutings'
-  module: Guided Project - Configure secure access to workloads with Azure virtual networking services
+    title: 'Demonstration: Create and configure network routing'
+    module: 'Guided Project - Configure secure access to workloads with Azure virtual networking services'
 ---
-## Demonstration – Erstellen und Konfigurieren des Netzwerkroutings
+## Demonstration – Create and configure network routing
 
-In dieser Demo erhalten wir Informationen zum Erstellen einer Routingtabelle, zum Definieren einer benutzerdefinierten Route sowie zum Zuordnen der Route zu einem Subnetz. 
-
-
-**Hinweis:** Für diese Demo ist ein virtuelles Netzwerk mit mindestens einem Subnetz erforderlich.
-
-[Weiterleiten von Netzwerkdatenverkehr: Tutorial – Azure-Portal](https://learn.microsoft.com/azure/virtual-network/tutorial-create-route-table-portal#create-a-route-table)
+In this demonstration, we will learn how to create a route table, define
+a custom route, and associate the route with a subnet. 
 
 
-### Erstellen einer Routingtabelle 
+**Note:** This demonstration requires a virtual network with at least one subnet.
 
-1. Wenn Sie Zeit haben, sehen Sie sich das Tutorialdiagramm an. Erläutern Sie, warum Sie eine benutzerdefinierte Route erstellen müssen. 
+[Route network traffic - tutorial - Azure portal](https://learn.microsoft.com/azure/virtual-network/tutorial-create-route-table-portal#create-a-route-table)
 
-1. Öffnen Sie das Azure-Portal.
 
-1. Suchen Sie nach **Routingtabellen**, und wählen Sie diese Option aus. Besprechen Sie, wann **verteilte Gatewayrouten** verwendet werden sollen. 
+### Create a Route table 
 
-1. Erstellen Sie eine Routingtabelle, und erläutern Sie alle ungewöhnlichen Einstellungen. 
+1. As you have time review the tutorial diagram. Explain why you need to create a user-defined route. 
 
-1. Warten Sie, bis die neue Routingtabelle bereitgestellt wurde.
+1. Access the Azure portal.
 
-**Hinzufügen einer Route**
+1. Search for and select **Route tables**. Discuss when **propagate gateway routes** should be used. 
 
-1.  Wählen Sie Ihre neue Routingtabelle und dann  **Routen** aus.
+1. Create a routing table, explain any uncommon settings. 
 
-1.  Erstellen Sie eine neue **Route**. Diskutieren Sie die verschiedenen **verfügbaren Hoptypen**. 
+1. Wait for the new routing table to be deployed.
 
-1.  Erstellen Sie die neue Route, und warten Sie, bis die Ressource bereitgestellt wird.
+**Add a route**
+
+1.  Select your new routing table, and then select **Routes**.
+
+1.  Create a new **route**. Discuss the different **hop types** that are available. 
+
+1.  Create the new route and wait for the resource to be deployed.
  
-### Zuordnen einer Routingtabelle zu einem Subnetz
-Eine Routingtabelle kann keinem oder mehreren Subnetzen zugeordnet werden. Routingtabellen werden nicht virtuellen Netzwerken zugeordnet. Sie müssen jedem Subnetz, dem die Routingtabelle zugeordnet werden soll, eine Routingtabelle zuordnen.
+### Associate a Route Table to a subnet
+A route table can be associated to zero or more subnets. Route tables aren't associated to virtual networks. You must associate a route table to each subnet you want the route table associated to.
 
 
-1.  Navigieren Sie zu dem Subnetz, das Sie der Routingtabelle zuordnen möchten.
+1.  Navigate to the subnet you want to associate with the routing table.
 
-1.  Wählen Sie **Routingtabelle** aus, und wählen Sie Ihre neue Routingtabelle aus. 
+1.  Select **Route table** and choose your new routing table. 
 
-1.  **Speichern** Sie Ihre Änderungen.
+1.  **Save** your changes.
 
  
->**Hinweis**: Sie können eine Routingtabelle nur Subnetzen in virtuellen Netzwerken zuordnen, die an demselben Azure-Speicherort und unter demselben Abonnement wie die Routingtabelle vorhanden sind.
+>**Note**: You can only associate a route table to subnets in virtual networks that exist in the same Azure location and subscription as the route table.
 
->**Hinweis**: Die Kursteilnehmer sollten jetzt in der Lage sein, LAB_04 abzuschließen.
+>**Note**: Students should now be able to complete LAB_04

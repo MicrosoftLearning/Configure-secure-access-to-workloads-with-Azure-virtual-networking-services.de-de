@@ -1,60 +1,60 @@
 ---
 demo:
-  title: 'Demonstration: Erstellen und Konfigurieren einer Azure Firewall'
-  module: Guided Project - Configure secure access to workloads with Azure virtual networking services
+    title: 'Demonstration: Create and configure Azure Firewall'
+    module: 'Guided Project - Configure secure access to workloads with Azure virtual networking services'
 ---
-## Demonstration – Erstellen und Konfigurieren einer Azure Firewall
+## Demonstration – Create and configure Azure Firewall
 
-**Hinweis:** Die Bereitstellung der Azure Firewall kann einige Minuten dauern.
+**Note:** Azure Firewall can take a few minutes to deploy.
 
-In dieser Demonstration erkunden Sie Azure Firewall.
-Überprüfen und erstellen Sie eine Azure Firewall und eine Firewallrichtlinie.
-1.  [Unterstützende Folie] Bevor wir mit der Demonstration beginnen, wiederholen wir, was Azure Firewall ist.
-2.  Öffnen Sie das Azure-Portal.
-3.  Erstellen Sie eine Azure Firewall.
-4.  ⓘ Erläutern Sie die verfügbaren Konfigurationsoptionen auf der Registerkarte „Grundeinstellungen“, während Sie sie ausfüllen. 
-5.  Übernehmen Sie die anderen Standardwerte, und wählen Sie „Überprüfen + erstellen“ aus.
-6.  Wechseln Sie nach Abschluss der Bereitstellung zur Firewallressource, und überprüfen Sie die Übersichtsseite. 
+In this demonstration, explore Azure Firewall.
+Review and create an Azure Firewall and Firewall policy.
+1.	[Supporting Slide] Before beginning the demonstration, let's review what Azure Firewall is.
+2.	Access the Azure portal.
+3.	Create an Azure Firewall.
+4.	ⓘ on the Basics tab explain the configuration options available as you fill them out. 
+5.	Accept the other default values, then select Review + create.
+6.	After deployment is completed, go to the firewall resource, and review the overview page. 
 
 
-### Konfigurieren einer Anwendungsregel 
+### Configure an application rule 
 
-1. [Unterstützende Folie] Richtlinienregeln für Azure Firewall
+1. [Supporting Slide] Azure Firewall policy rules
 
-Hierbei handelt es sich um die Anwendungsregel, die ausgehenden Zugriff auf [www.google.com]\(www.google.com) zulässt.
-1.  Navigieren Sie zu der von Ihnen erstellten Firewallrichtlinie.
-2.  Wählen Sie „Anwendungsregeln“ aus.
-3.  Wählen Sie „Regelsammlung hinzufügen“ aus.
-4.  Geben Sie unter Name den Wert App-Coll01 ein.
-5.  Geben Sie unter Priorität den Wert 200 ein.
-6.  Wählen Sie unter „Regelsammlungsaktion“ die Option „Zulassen“ aus.
-7.  Geben Sie unter Regeln für Name den Wert Allow-Google ein.
-8.  Wählen Sie unter „Quelltyp“ die Option „IP-Adresse“ aus.
-9.  Geben Sie unter Quelle den Wert 10.0.2.0/24 ein.
-10. Geben Sie unter Protocol:port den Wert http, https ein.
-11. Wählen Sie unter „Zieltyp“ die Option „FQDN“ aus.
-12. Geben Sie für „Ziel“ den Wert „www.google.com“ ein.
-13. Wählen Sie „Hinzufügen“ aus.
+This is the application rule that allows outbound access to www.google.com.
+1.	Navigate to the firewall policy you created.
+2.	Select Application rules.
+3.	Select Add a rule collection.
+4.	For Name, enter App-Coll01.
+5.	For Priority, enter 200.
+6.	For Rule collection action, select Allow.
+7.	Under Rules, for Name, enter Allow-Google.
+8.	For Source type, select IP address.
+9.	For Source, enter 10.0.2.0/24.
+10.	For Protocol:port, enter http, https.
+11.	For Destination Type, select FQDN.
+12.	For Destination, enter www.google.com
+13.	Select Add.
 
-Azure Firewall enthält eine integrierte Regelsammlung für Infrastruktur-FQDNs, die standardmäßig zulässig sind. Diese FQDNs sind plattformspezifisch und können nicht für andere Zwecke verwendet werden. Weitere Informationen finden Sie unter Infrastruktur-FQDNs.
+Azure Firewall includes a built-in rule collection for infrastructure FQDNs that are allowed by default. These FQDNs are specific for the platform and can't be used for other purposes. For more information, see Infrastructure FQDNs.
 
-### Konfigurieren einer Netzwerkregel
-Hierbei handelt es sich um die Netzwerkregel, die ausgehenden Zugriff auf zwei IP-Adressen am Port 53 (DNS) zulässt.
-1.  Wählen Sie „Netzwerkregeln“ aus.
-2.  Wählen Sie „Regelsammlung hinzufügen“ aus.
-3.  Geben Sie unter Name den Wert Net-Coll01 ein.
-4.  Geben Sie unter Priorität den Wert 200 ein.
-5.  Wählen Sie unter „Regelsammlungsaktion“ die Option „Zulassen“ aus.
-6.  Wählen Sie für „Regelsammlungsgruppe“ die Option „DefaultNetworkRuleCollectionGroup“ aus.
-7.  Geben Sie unter Regeln für Name den Wert Allow-DNS ein.
-8.  Wählen Sie unter „Quelltyp“ die Option „IP-Adresse“ aus.
-9.  Geben Sie unter Quelle den Wert 10.0.2.0/24 ein.
-10. Wählen Sie für „Protokoll“ die Option „UDP“ aus.
-11. Geben Sie unter Zielports den Wert 53 ein.
-12. Wählen Sie unter „Zieltyp“ die Option „IP-Adresse“ aus.
+### Configure a network rule
+This is the network rule that allows outbound access to two IP addresses at port 53 (DNS).
+1.	Select Network rules.
+2.	Select Add a rule collection.
+3.	For Name, enter Net-Coll01.
+4.	For Priority, enter 200.
+5.	For Rule collection action, select Allow.
+6.	For Rule collection group, select DefaultNetworkRuleCollectionGroup.
+7.	Under Rules, for Name, enter Allow-DNS.
+8.	For Source type, select IP Address.
+9.	For Source, enter 10.0.2.0/24.
+10.	For Protocol, select UDP.
+11.	For Destination Ports, enter 53.
+12.	For Destination type select IP address.
 
->**Hinweis**: Die Kursteilnehmer sollten jetzt in der Lage sein, LAB_04 abzuschließen.
-14. Geben Sie unter „Ziel“ den Wert 209.244.0.3, 209.244.0.4 ein.
-Dies sind öffentliche DNS-Server, die von CenturyLink betrieben werden.
-15. Wählen Sie „Hinzufügen“ aus.
+>**Note**: Students should now be able to complete LAB_04
+14.	For Destination, enter 209.244.0.3, 209.244.0.4.
+These are public DNS servers operated by CenturyLink.
+15.	Select Add.
 

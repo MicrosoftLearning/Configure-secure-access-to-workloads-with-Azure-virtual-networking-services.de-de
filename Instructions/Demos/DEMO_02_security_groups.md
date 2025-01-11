@@ -1,57 +1,57 @@
 ---
 demo:
-  title: 'Demonstration: Erstellen und Konfigurieren von Netzwerksicherheitsgruppen'
-  module: Guided Project - Configure secure access to workloads with Azure virtual networking services
+    title: 'Demonstration: Create and configure network security groups'
+    module: 'Guided Project - Configure secure access to workloads with Azure virtual networking services'
 ---
-## Demonstration – Erstellen und Konfigurieren von Netzwerksicherheitsgruppen
+## Demonstration – Create and configure network security groups
 
 
-In dieser Demonstration werden wir uns mit Sicherheitsgruppen befassen. 
+In this demonstration, we will explore security groups. 
 
-**Hinweis:** Eine **[interaktive Labsimulation für virtuelle Netzwerke](https://mslearn.cloudguides.com/en-us/guides/AZ-900%20Exam%20Guide%20-%20Azure%20Fundamentals%20Exercise%2013?azure-portal=true)** ist verfügbar, mit der Sie ein ähnliches Lab durchgehen können, wenn Sie keine Live-Demonstration durchführen können. Möglicherweise liegen geringfügige Unterschiede zwischen der interaktiven Simulation und der vorgeschlagenen Demo vor, aber die dargestellten Kernkonzepte und Ideen sind identisch. 
+**Note:** An **[interactive lab simulation for virtual networks](https://mslearn.cloudguides.com/en-us/guides/AZ-900%20Exam%20Guide%20-%20Azure%20Fundamentals%20Exercise%2013?azure-portal=true)** is available that allows you to click through a similar lab if you are unable to do a live demonstration. You may find slight differences between the interactive simulation and the suggested demo, but the core concepts and ideas being demonstrated are the same. 
 
-[Einschränken des Zugriffs auf PaaS-Ressourcen – Tutorial – Azure-Portal](https://docs.microsoft.com/azure/virtual-network/tutorial-restrict-network-access-to-resources)
+[Restrict access to PaaS resources - tutorial - Azure portal](https://docs.microsoft.com/azure/virtual-network/tutorial-restrict-network-access-to-resources)
 
-### Erstellen einer Netzwerksicherheitsgruppe
+### Create a network security group
 
-1. Öffnen Sie das Azure-Portal.
+1. Access the Azure Portal.
 
-1. Navigieren Sie zum Eintrag  **Netzwerksicherheitsgruppen**, und wählen Sie ihn aus.
+1. Search for and select the **Network Security Groups**.
 
-1. [Unterstützende Folie] Erstellen Sie eine NSG, und erläutern Sie dabei die Einstellungen. 
+1. [Supporting Slide] Create a NSG explaining the settings as you go. 
  
-1. Warten Sie, bis die neue NSG bereitgestellt wurde.
+1. Wait for the new NSG to deploy.
 
-**Erkunden von Eingangs- und Ausgangsregeln**
+**Explore inbound and outbound rules**
 
-1. Wählen Sie Ihre neue NSG aus.
+1. Select your new NSG.
 
-1. [Unterstützende Folie] Besprechen Sie, wie die NSG Subnetzen oder Netzwerkschnittstellen zugeordnet werden kann.
+1. [Supporting Slide] Discuss how the NSG can be associated with subnets or network interfaces.
 
-1. Erörtern Sie die zweckmäßigen Eingangs- und Ausgangsregeln.  
+1. Discuss the purpose inbound and outbound rules.  
 
-1. Überprüfen Sie die Standardeingangs- und -ausgangsregeln. 
+1. Review the default inbound and outbound rules. 
 
-1. Erstellen Sie eine neue Regel, und erläutern Sie die Einstellungen. Erläutern Sie insbesondere die Dienstauswahl (z. B. HTTPS) und die Prioritätseinstellungen. 
+1. Create a new rule, explaining the settings as you go. Specifically discuss the service selection (like HTTPS) and the priority settings. 
  
 
-### Erstellen der ASG
+### Create ASG
  
-1. [Unterstützende Folie] Suchen Sie den Eintrag  **Anwendungssicherheitsgruppen**, und wählen Sie ihn aus.
+1. [Supporting Slide] Search for and select the **Application Security Groups**.
 
-1. Erstellen Sie eine ASG, und erläutern Sie dabei die Einstellungen. 
+1. Create an ASG explaining the settings as you go. 
  
-1. Warten Sie, bis die neue ASG bereitgestellt wurde.
+1. Wait for the new ASG to deploy.
 
-1. Besprechen Sie, wie NSG-Regeln zur ASG zugeordnet werden können.
-
-
-### Zuordnen der NSGs 
-1.  Navigieren Sie zur NSG, die Sie erstellt haben.
-1.  Wählen Sie „Subnetze“ im Abschnitt „Einstellungen“ aus.
-1.  Wählen Sie auf der Seite „Subnetze“ die Option „+ Zuordnen“ aus.
-1.  Wählen Sie unter „Subnetz zuordnen“ Ihr virtuelles Netzwerk aus.
+1. Discuss how the ASG can be associated with NSG rules.
 
 
->**Hinweis**: Die Kursteilnehmer sollten jetzt in der Lage sein, LAB_02 abzuschließen.
+### Associate the NSGs 
+1.	Navigate to the NSG you created
+1.	Select Subnets from the Settings section.
+1.	In the Subnets page, select + Associate
+1.	Under Associate subnet, select your Virtual network.
+
+
+>**Note**: Students should now be able to complete LAB_02
 
