@@ -10,9 +10,7 @@ lab:
 
 Ihre Organisation erfordert, dass der Netzwerkdatenverkehr in app-vnet streng kontrolliert wird. Sie identifizieren diese Anforderungen.
 + Das Front-End-Subnetz enthält Webserver, auf die über das Internet zugegriffen werden kann. Für diese Server ist eine **Anwendungssicherheitsgruppe** (ASG) erforderlich. Der ASG sollte jeder Schnittstelle des virtueller Computers zugeordnet werden, die Teil der Gruppe ist. Dadurch können die Webserver einfach verwaltet werden. 
-+ Eine **NSG-Regel** ist erforderlich, um eingehenden HTTPS-Datenverkehr zum ASG zuzulassen. Diese Regel verwendet das TCP-Protokoll am Port 443. 
 + Das Back-End-Subnetz enthält Datenbankserver, die von den Front-End-Webservern verwendet werden. Eine **Netzwerksicherheitsgruppe** (NSG) ist erforderlich, um diesen Verkehr zu kontrollieren. Die NSG sollte jeder VM-Schnittstelle zugeordnet werden, auf die von den Webservern zugegriffen wird. 
-+ Eine **NSG-Regel** ist erforderlich, um eingehenden Netzwerkverkehr vom ASG zu den Backend-Servern zuzulassen.  Diese Regel verwendet den MS SQL-Dienst und Port 1443. 
 + Zum Testen sollte ein virtueller Computer im Frontend-Subnetz (VM1) und im Backend-Subnetz (VM2) installiert werden.  Die IT-Gruppe hat eine Azure Resource Manager-Vorlage vorbereitet, um diese **Ubuntu-Server** bereitzustellen. 
 
 ## Qualifikationsaufgabe
@@ -39,9 +37,9 @@ Ihre Organisation erfordert, dass der Netzwerkdatenverkehr in app-vnet streng ko
 
 1. Wenn Sie aufgefordert werden, entweder **Bash** oder **PowerShell** auszuwählen, wählen Sie **PowerShell** aus.
 
-1. Für diese Aufgabe ist kein Speicherplatz erforderlich Wählen Sie Ihr Abonnement aus. 
+1. Für diese Aufgabe ist kein Speicherplatz erforderlich Wählen Sie Ihr Abonnement aus. **Wenden Sie Ihre Änderungen an**. 
 
-1. Stellen Sie die für diese Übung erforderlichen virtuellen Computer bereit.
+1. Verwenden Sie diese Befehle, um die für diese Übung erforderlichen virtuellen Computer bereitzustellen.
 
 >**Hinweis**: Wenn die Bereitstellung aufgrund von Kapazitätsbeschränkungen fehlschlägt, bearbeiten Sie die Vorlage und ändern Sie den Wert „Standort“. 
 
@@ -74,7 +72,7 @@ Ihre Organisation erfordert, dass der Netzwerkdatenverkehr in app-vnet streng ko
 
 **Zuordnen der Anwendungssicherheitsgruppe zur Netzwerkschnittstelle der VM**
 
-1. Suchen Sie im Azure-Portal nach `VM2` und wählen Sie es aus.
+1. Suchen Sie im Azure-Portal nach `VM1` und wählen Sie es aus.
 
 1. Wählen Sie im Blatt **Netzwerke** die Option **Anwendungssicherheitsgruppen** und anschließend die Option **Anwendungssicherheitsgruppen hinzufügen** aus.
 
@@ -107,7 +105,7 @@ NSGs können Subnetzen und/oder einzelnen Netzwerkschnittstellen zugeordnet werd
 
 1. Wählen Sie **+ Zuordnen** aus.
 
-1. Wählen Sie **app-vnet (RG1)** und dann das **Backend**-Subnetz. Klicken Sie auf **OK**.
+1. Wählen Sie **app-vnet (RG1)** und dann das **Backend**-Subnetz. Wählen Sie **OK** aus.
 
 ### Erstellen von Regeln für Netzwerksicherheitsgruppen
 
@@ -126,7 +124,7 @@ Ein NSG verwendet [Sicherheitsregeln](https://learn.microsoft.com/azure/virtual-
     | Quelle                                 | **Alle**                        |
     | Quellportbereiche                     | **\***                         |
     | Ziel                            | **Anwendungssicherheitsgruppe** |
-    | Ziel-Anwendungssicherheitsgruppe | **app-backend-asg**            |
+    | Ziel-Anwendungssicherheitsgruppe | **app-frontend-asg**            |
     | Dienst                                | **SSH**                        |
     | Aktion                                 | **Zulassen**                      |
     | Priorität                               | **100**                        |
