@@ -70,6 +70,7 @@ Ihr Unternehmen erfordert eine zentralisierte Netzwerksicherheit für das virtue
     | Virtuelles Netzwerk auswählen | **Vorhandenes verwenden**                                  |
     | Virtuelles Netzwerk          | **app-vnet** (RG1)                                |
     | Öffentliche IP-Adresse        | Neu hinzufügen: **fwpip**                                |
+    | Firewall Management NIC aktivieren | **Kontrollkästchen deaktivieren**                         |
 
     [Erfahren Sie mehr über das Erstellen einer Firewall](https://docs.microsoft.com/azure/firewall/tutorial-firewall-deploy-portal).
 
